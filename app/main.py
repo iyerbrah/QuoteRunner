@@ -2,6 +2,7 @@
 The web app: one page and a small JSON API around the intake agent.
 
   GET  /                                     the chat page
+  GET  /healthz                              liveness check for systemd/uptime monitors
   POST /api/chat                             a customer message in; reply + form state out
   GET  /api/sessions/{id}/application.json   the finished application (once done)
   GET  /evals                                eval results (latest full run, or ?run=N)
@@ -22,6 +23,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field
+from sqlalchemy import text
 from sqlmodel import Session
 
 from app import config, eval_reports
@@ -35,7 +37,8 @@ from app.llm import BudgetExceeded
 log = logging.getLogger("quoterunner")
 HERE = Path(__file__).parent
 
-app = FastAPI(title="QuoteRunner")
+# No auto-generated /docs or /openapi.json: a public demo doesn't need an API browser.
+app = FastAPI(title="QuoteRunner", docs_url=None, redoc_url=None, openapi_url=None)
 app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
 templates = Jinja2Templates(directory=HERE / "templates")
 templates.env.filters["pct"] = lambda x, digits=0: f"{x * 100:.{digits}f}%"
@@ -109,6 +112,14 @@ def error(status_code: int, message: str) -> JSONResponse:
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
+@app.get("/healthz")
+def healthz():
+    """For uptime monitors and deploy.sh: the app is up and can reach its database. No LLM call."""
+    with Session(get_engine()) as db:
+        db.exec(text("SELECT 1"))
+    return {"status": "ok"}
+
+
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse(request, "index.html", {

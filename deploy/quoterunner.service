@@ -1,0 +1,22 @@
+# systemd unit: runs QuoteRunner on 127.0.0.1:8000, behind nginx.
+# Install:  sudo cp deploy/quoterunner.service /etc/systemd/system/
+#           sudo systemctl daemon-reload && sudo systemctl enable --now quoterunner
+# Logs:     journalctl -u quoterunner -f
+
+[Unit]
+Description=QuoteRunner insurance intake agent
+After=network.target
+
+[Service]
+User=ram
+WorkingDirectory=/opt/quoterunner
+# API keys, provider, models and spend caps. Not in git; chmod 600.
+EnvironmentFile=/opt/quoterunner/.env
+# --proxy-headers: trust X-Forwarded-For, but only from nginx on this machine,
+# so the rate limit sees each visitor's real IP instead of nginx's.
+ExecStart=/opt/quoterunner/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2 --proxy-headers --forwarded-allow-ips 127.0.0.1
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
