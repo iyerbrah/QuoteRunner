@@ -30,7 +30,7 @@ from app.agent.questions import (BASE_QUESTIONS, INDUSTRY_QUESTIONS, PRIORITY,
                                  Question, applicable_industry_questions,
                                  industry_categories, next_question, validate_answer)
 from app.agent.rules import recommend_coverage, risk_flags
-from app.agent.schema import BASE_FIELD_GROUP, GROUPS, Submission, validate_base_field
+from app.agent.schema import BASE_FIELD_GROUP, GROUPS, US_STATES, Submission, validate_base_field
 
 GREETING = ("Hi! I'll help you put together a business insurance application. "
             "Tell me about your business in a sentence or two: what you do, where, and how big.")
@@ -137,7 +137,9 @@ def extraction_tool() -> dict:
     properties = {field: BASE_FIELD_GROUP[field].model_json_schema()["properties"][field]
                   for field in PRIORITY}
     properties["industry_category"] = {"type": "string", "enum": industry_categories(),
-                                       "description": "Closest category for what the business does"}
+                                       "description": ("Pick a specific industry for any kind of that business "
+                                                       "(a Thai restaurant or pizza place is 'restaurant', a "
+                                                       "preschool is 'daycare'). Use 'other' only if none fits.")}
     for category, questions in INDUSTRY_QUESTIONS.items():
         for q in questions:
             schema = q.json_schema()
@@ -352,6 +354,8 @@ def format_value(field: str, value) -> str:
         return "Yes" if value else "No"
     if field == "annual_revenue_usd":
         return f"${value:,}"
+    if field == "state":
+        return f"{US_STATES[value]} ({value})"  # "Oregon (OR)": customers recognise the name
     if isinstance(value, int):
         return f"{value:,}"
     return str(value)
@@ -365,6 +369,8 @@ def summary_message(state: IntakeState, rejected: list[str]) -> str:
     lines.append("Here's what I have:")
     fields = PRIORITY + [q.field for q in applicable_industry_questions(state.answers)]
     for field in fields:
+        if field == "industry_category" and state.answers.get(field) == "other":
+            continue  # an internal label; "Industry: other" just confuses a bakery owner
         if field in state.answers:
             lines.append(f"- {label(field)}: {format_value(field, state.answers[field])}")
         elif field in state.unknown:

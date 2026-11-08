@@ -63,6 +63,12 @@ def _total_spent(session: Session, *conditions) -> float:
     return session.exec(query).one()
 
 
+def session_cost(session_id: str) -> float:
+    """Total USD spent so far by one session (used by the eval runner)."""
+    with Session(get_engine()) as s:
+        return _total_spent(s, LLMCall.session_id == session_id)
+
+
 def check_budget(session_id: str | None) -> None:
     """Raise BudgetExceeded if this session, or the whole app today, has hit its cap."""
     with Session(get_engine()) as s:

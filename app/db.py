@@ -1,8 +1,9 @@
 """
-The SQLite database: a log of every LLM call, and the web chat sessions.
-Step 4 adds eval runs here.
+The SQLite database: a log of every LLM call, the web chat sessions, and
+eval runs with their conversations.
 """
 
+import threading
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -45,14 +46,44 @@ class ChatSession(SQLModel, table=True):
     state_json: str
 
 
+class EvalRun(SQLModel, table=True):
+    """One run of the eval harness: its settings and headline scores."""
+
+    __tablename__ = "eval_runs"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    created_at: datetime = Field(default_factory=utc_now)
+    note: Optional[str] = None
+    config_json: str
+    summary_json: str = "{}"
+
+
+class EvalConversation(SQLModel, table=True):
+    """One simulated customer's conversation within an eval run."""
+
+    __tablename__ = "eval_conversations"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    run_id: int = Field(foreign_key="eval_runs.id", index=True)
+    persona_id: int
+    scores_json: str
+    transcript_json: str
+
+
 _engine = None
+_engine_lock = threading.Lock()
 
 
 def get_engine():
     """Open the database on first use and create any missing tables."""
     global _engine
-    if _engine is None:
-        config.DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-        _engine = create_engine(f"sqlite:///{config.DB_PATH}")
-        SQLModel.metadata.create_all(_engine)
+    with _engine_lock:  # two threads starting at once must not both create it
+        if _engine is None:
+            config.DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+            # The web server and the eval runner use several threads.
+            # SQLite's Python driver refuses to share a connection across
+            # threads unless told it may; SQLAlchemy's pool handles the rest.
+            _engine = create_engine(f"sqlite:///{config.DB_PATH}",
+                                    connect_args={"check_same_thread": False})
+            SQLModel.metadata.create_all(_engine)
     return _engine

@@ -1,0 +1,493 @@
+{
+  "run_id": 1,
+  "config": {
+    "models": {
+      "agent": "gpt-5-nano",
+      "customer_sim": "gpt-5-nano"
+    },
+    "reasoning_effort": "low",
+    "seed": 2026,
+    "personas": [
+      1,
+      2,
+      3
+    ],
+    "max_customer_messages": 25,
+    "git_commit": "894fb53-dirty",
+    "note": "smoke test"
+  },
+  "summary": {
+    "conversations": 3,
+    "field_accuracy": 1.0,
+    "invented_values": 0,
+    "conversations_with_invented": 0,
+    "wrong_values": 0,
+    "missed_values": 0,
+    "completion_rate": 1.0,
+    "avg_questions": 5.0,
+    "form_fields": 25,
+    "avg_cost_agent_usd": 0.0019088166666666668,
+    "avg_cost_sim_usd": 0.0004889666666666667,
+    "errors": 0,
+    "per_field": {
+      "industry_category": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "state": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "num_employees": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "annual_revenue_usd": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "num_vehicles": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "prior_claims_3yr": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "years_in_business": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "business_name": {
+        "correct": 3,
+        "total": 3,
+        "accuracy": 1.0
+      },
+      "licensed_capacity": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "state_licensed": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "transports_children": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "has_pool": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "seating_capacity": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "serves_alcohol": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "has_deep_fryers": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      },
+      "offers_delivery": {
+        "correct": 1,
+        "total": 1,
+        "accuracy": 1.0
+      }
+    },
+    "by_industry": {
+      "daycare": 1.0,
+      "other": 1.0,
+      "restaurant": 1.0
+    },
+    "by_style": {
+      "many_facts": 1.0,
+      "rambling": 1.0,
+      "typos": 1.0
+    }
+  },
+  "conversations": [
+    {
+      "persona": {
+        "id": 1,
+        "category": "daycare",
+        "style": "rambling",
+        "truth": {
+          "description": "childcare center",
+          "industry_category": "daycare",
+          "state": "ID",
+          "num_employees": 8,
+          "annual_revenue_usd": 840000,
+          "years_in_business": 18,
+          "business_name": "Riverside Kids Academy",
+          "licensed_capacity": 90,
+          "state_licensed": true,
+          "transports_children": true,
+          "has_pool": false,
+          "num_vehicles": 1
+        },
+        "unknown": [
+          "prior_claims_3yr"
+        ],
+        "change": null
+      },
+      "result": {
+        "persona_id": 1,
+        "industry": "daycare",
+        "style": "rambling",
+        "completed": true,
+        "questions": 4,
+        "customer_messages": 5,
+        "accuracy": 1.0,
+        "fields": {
+          "industry_category": "correct",
+          "state": "correct",
+          "num_employees": "correct",
+          "annual_revenue_usd": "correct",
+          "num_vehicles": "correct",
+          "prior_claims_3yr": "correct",
+          "years_in_business": "correct",
+          "business_name": "correct",
+          "licensed_capacity": "correct",
+          "state_licensed": "correct",
+          "transports_children": "correct",
+          "has_pool": "correct"
+        },
+        "invented": [],
+        "inapplicable": [],
+        "wrong": [],
+        "missed": [],
+        "error": null,
+        "cost_agent_usd": 0.0015506,
+        "cost_sim_usd": 0.0005362
+      },
+      "answers": {
+        "industry_category": "daycare",
+        "description": "state-licensed childcare center in Idaho",
+        "state": "ID",
+        "num_employees": 8,
+        "annual_revenue_usd": 840000,
+        "num_vehicles": 1,
+        "years_in_business": 18,
+        "business_name": "Riverside Kids Academy",
+        "licensed_capacity": 90,
+        "transports_children": true,
+        "state_licensed": true,
+        "has_pool": false
+      },
+      "unknown": [
+        "prior_claims_3yr"
+      ],
+      "transcript": [
+        {
+          "role": "assistant",
+          "content": "Hi! I'll help you put together a business insurance application. Tell me about your business in a sentence or two: what you do, where, and how big."
+        },
+        {
+          "role": "user",
+          "content": "Riverside Kids Academy is a state-licensed childcare center in Idaho. We have 8 employees, transport children, a licensed capacity of 90, about $840,000 in annual revenue, and we\u2019ve been in business for 18 years\u2014plus we have 1 vehicle for transportation."
+        },
+        {
+          "role": "assistant",
+          "content": "For Riverside Kids Academy, how many insurance claims have you filed in the last three years?"
+        },
+        {
+          "role": "user",
+          "content": "I\u2019m not sure\u2014I don\u2019t have that information."
+        },
+        {
+          "role": "assistant",
+          "content": "Is Riverside Kids Academy state-licensed?"
+        },
+        {
+          "role": "user",
+          "content": "Yes, Riverside Kids Academy is state-licensed in Idaho."
+        },
+        {
+          "role": "assistant",
+          "content": "Is there a swimming pool on the premises?"
+        },
+        {
+          "role": "user",
+          "content": "No, there\u2019s no swimming pool on our premises. I always tell the parents that we focus on indoor activities and safety."
+        },
+        {
+          "role": "assistant",
+          "content": "Here's what I have:\n- What the business does: state-licensed childcare center in Idaho\n- Industry: daycare\n- State: ID\n- Employees: 8\n- Annual revenue: $840,000\n- Business vehicles: 1\n- Claims in last 3 years: not known (a broker will follow up)\n- Years in business: 18\n- Business name: Riverside Kids Academy\n- Licensed capacity (children): 90\n- State licensed: Yes\n- Transports children: Yes\n- Pool on premises: No\n\nIs everything correct? Reply yes, or tell me what to change."
+        },
+        {
+          "role": "user",
+          "content": "Yes."
+        },
+        {
+          "role": "assistant",
+          "content": "Thanks, your application is complete. A licensed broker will review it and follow up with quotes."
+        }
+      ]
+    },
+    {
+      "persona": {
+        "id": 2,
+        "category": "restaurant",
+        "style": "typos",
+        "truth": {
+          "description": "pizza place",
+          "industry_category": "restaurant",
+          "state": "IL",
+          "num_employees": 24,
+          "prior_claims_3yr": 1,
+          "years_in_business": 34,
+          "business_name": "Lone Star Kitchen",
+          "seating_capacity": 60,
+          "serves_alcohol": false,
+          "has_deep_fryers": false,
+          "offers_delivery": false,
+          "num_vehicles": 0
+        },
+        "unknown": [
+          "annual_revenue_usd"
+        ],
+        "change": null
+      },
+      "result": {
+        "persona_id": 2,
+        "industry": "restaurant",
+        "style": "typos",
+        "completed": true,
+        "questions": 8,
+        "customer_messages": 9,
+        "accuracy": 1.0,
+        "fields": {
+          "industry_category": "correct",
+          "state": "correct",
+          "num_employees": "correct",
+          "annual_revenue_usd": "correct",
+          "num_vehicles": "correct",
+          "prior_claims_3yr": "correct",
+          "years_in_business": "correct",
+          "business_name": "correct",
+          "seating_capacity": "correct",
+          "serves_alcohol": "correct",
+          "has_deep_fryers": "correct",
+          "offers_delivery": "correct"
+        },
+        "invented": [],
+        "inapplicable": [],
+        "wrong": [],
+        "missed": [],
+        "error": null,
+        "cost_agent_usd": 0.00299795,
+        "cost_sim_usd": 0.00056355
+      },
+      "answers": {
+        "industry_category": "restaurant",
+        "description": "pizza place, Lone Star Kitchen",
+        "state": "IL",
+        "num_employees": 24,
+        "business_name": "Lone Star Kitchen",
+        "seating_capacity": 60,
+        "years_in_business": 34,
+        "num_vehicles": 0,
+        "prior_claims_3yr": 1,
+        "serves_alcohol": false,
+        "has_deep_fryers": false,
+        "offers_delivery": false
+      },
+      "unknown": [
+        "annual_revenue_usd"
+      ],
+      "transcript": [
+        {
+          "role": "assistant",
+          "content": "Hi! I'll help you put together a business insurance application. Tell me about your business in a sentence or two: what you do, where, and how big."
+        },
+        {
+          "role": "user",
+          "content": "we run a pizza place, lone star kitchen, in peoria, il. we have 24 employees and 60 seats, and we\u2019ve been in business for about 34 yrs."
+        },
+        {
+          "role": "assistant",
+          "content": "Just to check, I have Years in business: 34. Is that right? If not, what's the exact figure?"
+        },
+        {
+          "role": "user",
+          "content": "yes, 34 years."
+        },
+        {
+          "role": "assistant",
+          "content": "What\u2019s your annual revenue?"
+        },
+        {
+          "role": "user",
+          "content": "i dont know the annual revenue. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "How many vehicles do you use for the business?"
+        },
+        {
+          "role": "user",
+          "content": "we have 0 business vehicles. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "In the last three years, how many insurance claims has your business filed?"
+        },
+        {
+          "role": "user",
+          "content": "1 claim in the last 3 years. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "Do you serve alcohol at your business?"
+        },
+        {
+          "role": "user",
+          "content": "no, we do not serve alcohol. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "Do you use deep fryers?"
+        },
+        {
+          "role": "user",
+          "content": "no, we do not use deep fryers. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "Do you deliver food with your own drivers?"
+        },
+        {
+          "role": "user",
+          "content": "no, we do not offer delivery. thx."
+        },
+        {
+          "role": "assistant",
+          "content": "Here's what I have:\n- What the business does: pizza place, Lone Star Kitchen\n- Industry: restaurant\n- State: IL\n- Employees: 24\n- Annual revenue: not known (a broker will follow up)\n- Business vehicles: 0\n- Claims in last 3 years: 1\n- Years in business: 34\n- Business name: Lone Star Kitchen\n- Seats: 60\n- Serves alcohol: No\n- Deep fryers: No\n- Offers delivery: No\n\nIs everything correct? Reply yes, or tell me what to change."
+        },
+        {
+          "role": "user",
+          "content": "yes"
+        },
+        {
+          "role": "assistant",
+          "content": "Thanks, your application is complete. A licensed broker will review it and follow up with quotes."
+        }
+      ]
+    },
+    {
+      "persona": {
+        "id": 3,
+        "category": "other",
+        "style": "many_facts",
+        "truth": {
+          "description": "print shop",
+          "industry_category": "other",
+          "state": "WV",
+          "num_employees": 33,
+          "years_in_business": 34,
+          "business_name": "Harbor Printing",
+          "num_vehicles": 1
+        },
+        "unknown": [
+          "prior_claims_3yr",
+          "annual_revenue_usd"
+        ],
+        "change": null
+      },
+      "result": {
+        "persona_id": 3,
+        "industry": "other",
+        "style": "many_facts",
+        "completed": true,
+        "questions": 3,
+        "customer_messages": 4,
+        "accuracy": 1.0,
+        "fields": {
+          "industry_category": "correct",
+          "state": "correct",
+          "num_employees": "correct",
+          "annual_revenue_usd": "correct",
+          "num_vehicles": "correct",
+          "prior_claims_3yr": "correct",
+          "years_in_business": "correct",
+          "business_name": "correct"
+        },
+        "invented": [],
+        "inapplicable": [],
+        "wrong": [],
+        "missed": [],
+        "error": null,
+        "cost_agent_usd": 0.0011779000000000002,
+        "cost_sim_usd": 0.00036715
+      },
+      "answers": {
+        "industry_category": "other",
+        "description": "Harbor Printing is a print shop",
+        "state": "WV",
+        "num_employees": 33,
+        "num_vehicles": 1,
+        "years_in_business": 34,
+        "business_name": "Harbor Printing"
+      },
+      "unknown": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "transcript": [
+        {
+          "role": "assistant",
+          "content": "Hi! I'll help you put together a business insurance application. Tell me about your business in a sentence or two: what you do, where, and how big."
+        },
+        {
+          "role": "user",
+          "content": "Harbor Printing is a print shop in West Virginia. We have 33 employees, have been in business for 34 years, and we operate 1 company vehicle."
+        },
+        {
+          "role": "assistant",
+          "content": "What\u2019s your annual revenue?"
+        },
+        {
+          "role": "user",
+          "content": "I\u2019m not sure what our annual revenue is."
+        },
+        {
+          "role": "assistant",
+          "content": "How many insurance claims has your business filed in the last 3 years?"
+        },
+        {
+          "role": "user",
+          "content": "I\u2019m not sure."
+        },
+        {
+          "role": "assistant",
+          "content": "Here's what I have:\n- What the business does: Harbor Printing is a print shop\n- Industry: other\n- State: WV\n- Employees: 33\n- Annual revenue: not known (a broker will follow up)\n- Business vehicles: 1\n- Claims in last 3 years: not known (a broker will follow up)\n- Years in business: 34\n- Business name: Harbor Printing\n\nIs everything correct? Reply yes, or tell me what to change."
+        },
+        {
+          "role": "user",
+          "content": "Yes."
+        },
+        {
+          "role": "assistant",
+          "content": "Thanks, your application is complete. A licensed broker will review it and follow up with quotes."
+        }
+      ]
+    }
+  ]
+}

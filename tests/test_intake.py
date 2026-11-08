@@ -225,9 +225,21 @@ def test_complete_form_moves_to_confirming_with_a_code_built_summary(monkeypatch
     reply = state.messages[-1]["content"]
     assert state.status == "confirming"
     assert "Here's what I have" in reply
-    assert "- State: TX" in reply
+    assert "- State: Texas (TX)" in reply
+    assert "- Industry: roofing" in reply
     assert "- Annual revenue: $1,200,000" in reply
     assert fake.reply_calls == []  # the summary is not written by the LLM
+
+
+def test_summary_leaves_out_industry_other(monkeypatch):
+    run(monkeypatch, ext({"description": "bakery", "industry_category": "other", "state": "NJ",
+                          "num_employees": 5, "annual_revenue_usd": 400_000, "num_vehicles": 1,
+                          "prior_claims_3yr": 0, "years_in_business": 3, "business_name": "Cedar Bakery"}))
+    state = new_state()
+    reply = handle_message(state, "Cedar Bakery, a bakery in NJ")
+    assert state.status == "confirming"
+    assert "Industry" not in reply
+    assert "- What the business does: bakery" in reply
 
 
 def test_approval_moves_to_done(monkeypatch):
