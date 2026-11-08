@@ -42,6 +42,7 @@ def test_settings(tmp_path, monkeypatch):
     monkeypatch.setattr(config, "PRICES", {"test-model": {"input": 0.75, "output": 4.50}})
     monkeypatch.setattr(config, "SESSION_COST_CAP_USD", 0.25)
     monkeypatch.setattr(config, "DAILY_COST_CAP_USD", 10.0)
+    monkeypatch.setattr(config, "REASONING_EFFORT", None)
 
 
 def use_fake(monkeypatch, **kwargs) -> FakeCompletions:
@@ -121,6 +122,15 @@ def test_tools_and_role_are_passed_through(monkeypatch):
     assert fake.requests[0]["tools"] == tools
     assert fake.requests[0]["tool_choice"] == choice
     assert logged_calls()[0].role == "customer_sim"
+
+
+def test_reasoning_effort_is_sent_when_set(monkeypatch):
+    fake = use_fake(monkeypatch)
+    monkeypatch.setattr(config, "REASONING_EFFORT", "low")
+
+    chat(HELLO)
+
+    assert fake.requests[0]["reasoning_effort"] == "low"
 
 
 def test_failed_call_is_logged_and_error_reraised(monkeypatch):

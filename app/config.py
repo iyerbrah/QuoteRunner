@@ -24,6 +24,11 @@ MODELS = {
     "customer_sim": os.getenv("CUSTOMER_SIM_MODEL", "gpt-5-nano"),
 }
 
+# How hard reasoning models (like gpt-5-nano) "think" before answering:
+# minimal, low, medium or high. Thinking is billed as output tokens and adds
+# latency, so we keep it low. Set REASONING_EFFORT= (empty) to not send it.
+REASONING_EFFORT = os.getenv("REASONING_EFFORT", "low") or None
+
 # --- Prices in USD per 1 million tokens --------------------------------------
 # Every model in MODELS must be listed here, or chat() refuses to call it
 # (without a price we can't enforce the spend caps).

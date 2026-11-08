@@ -106,6 +106,8 @@ def chat(messages, tools=None, tool_choice=None, model_role="agent", session_id=
         request["tools"] = tools
     if tool_choice:
         request["tool_choice"] = tool_choice
+    if config.REASONING_EFFORT:
+        request["reasoning_effort"] = config.REASONING_EFFORT
 
     log = {"session_id": session_id, "role": model_role, "model": model}
     start = time.perf_counter()
