@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% set p = convo.persona %}
+{% set r = convo.result %}
+{% block title %}Run {{ report.run_id }} · persona {{ p.id }} · QuoteRunner{% endblock %}
+
+{% block header %}
+  <p class="meta"><a href="/evals?run={{ report.run_id }}">← Run {{ report.run_id }}</a></p>
+  <h1>Persona #{{ p.id }}: {{ p.truth.description }}</h1>
+  <p>{{ p.category }} · {{ p.truth.state }} · speaks “{{ p.style | replace("_", " ") }}” ·
+    doesn't know: {{ p.unknown | map("label") | join(", ") }}
+    {% if p.change %}· says {{ label(p.change.field) | lower }} = {{ p.change.first }} first, then corrects it{% endif %}</p>
+{% endblock %}
+
+{% block content %}
+  <section class="cards">
+    <div class="card"><span class="big">{{ r.accuracy | pct }}</span><span>field accuracy</span></div>
+    <div class="card {% if r.invented %}warn{% endif %}"><span class="big">{{ r.invented | length }}</span>
+      <span>invented values</span></div>
+    <div class="card"><span class="big">{{ "yes" if r.completed else "no" }}</span><span>finished</span></div>
+    <div class="card"><span class="big">{{ r.questions }}</span><span>questions asked</span></div>
+  </section>
+
+  <section class="two-col">
+    <div>
+      <h2>Field by field</h2>
+      <table>
+        <thead><tr><th>Field</th><th>True fact</th><th>Agent recorded</th><th>Result</th></tr></thead>
+        <tbody>
+        {% for row in rows %}
+          <tr><td>{{ row.label }}</td><td>{{ row.truth }}</td><td>{{ row.recorded }}</td>
+            <td><span class="tag {{ row.result }}">{{ row.result }}</span></td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% if r.error %}<p class="tag wrong">Error: {{ r.error }}</p>{% endif %}
+    </div>
+    <div>
+      <h2>Conversation</h2>
+      <div class="messages static">
+        {% for m in convo.transcript %}
+          <div class="msg {{ 'agent' if m.role == 'assistant' else 'user' }}">{{ m.content }}</div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

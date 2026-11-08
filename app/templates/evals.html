@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Eval results · QuoteRunner{% endblock %}
+
+{% block header %}
+  <h1>How QuoteRunner is measured</h1>
+  <p>{{ full_run }} simulated small-business owners, each with known true facts (and 1–2 facts they
+    don't know), talk to the same agent this site runs. Every field it records is checked against the truth.</p>
+{% endblock %}
+
+{% block content %}
+{% if not report %}
+  <p>No eval runs yet.</p>
+{% else %}
+  {% set s = report.summary %}
+  {% set cfg = report.config %}
+  <p class="meta">
+    {% if is_latest %}Latest full run:{% else %}Showing:{% endif %}
+    <strong>run {{ report.run_id }}</strong> · {{ report.created_at[:10] }} · {{ s.conversations }} conversations ·
+    agent {{ cfg.models.agent }} (reasoning {{ cfg.reasoning_effort }}) · commit {{ cfg.git_commit }}
+    {% if cfg.note %}· “{{ cfg.note }}”{% endif %}
+  </p>
+
+  <section class="cards">
+    <div class="card"><span class="big">{{ s.field_accuracy | pct(1) }}</span>
+      <span>field accuracy</span></div>
+    <div class="card {% if s.invented_values %}warn{% endif %}"><span class="big">{{ s.invented_values }}</span>
+      <span>invented values, in {{ s.conversations_with_invented }} of {{ s.conversations }} conversations</span></div>
+    <div class="card"><span class="big">{{ s.completion_rate | pct }}</span>
+      <span>conversations finished</span></div>
+    <div class="card"><span class="big">{{ "%.1f" | format(s.avg_questions) }}</span>
+      <span>questions on average, vs a {{ s.form_fields }}-field form</span></div>
+    <div class="card"><span class="big">${{ "%.4f" | format(s.avg_cost_agent_usd) }}</span>
+      <span>agent cost per conversation (+${{ "%.4f" | format(s.avg_cost_sim_usd) }} for the simulated customer)</span></div>
+  </section>
+
+  <section>
+    <h2>What the numbers mean</h2>
+    <ul class="defs">
+      <li><strong>Correct</strong>: matches the owner's true fact, or left empty because the owner didn't know it.</li>
+      <li><strong>Invented</strong>: a field filled that the owner never could have stated: a fact they didn't know,
+        or a question that doesn't apply to their business. In insurance a made-up answer can void a policy,
+        so this matters more than accuracy.</li>
+      <li><strong>Wrong / missed</strong>: the owner knew it, and the agent recorded something else / nothing.</li>
+      <li>Accuracy counts every field that applies to the business, except the free-text description.
+        Simulated customers are easier than real people and occasionally state facts they were told they
+        don't know, so the transcripts are published below to be read.</li>
+    </ul>
+  </section>
+
+  {% if samples %}
+  <section>
+    <h2>Sample conversations</h2>
+    <ul class="samples">
+      {% for c in samples %}
+        <li><a href="/evals/runs/{{ report.run_id }}/{{ c.persona.id }}">#{{ c.persona.id }} · {{ c.persona.category }},
+          {{ c.persona.truth.state }}, {{ c.persona.style | replace("_", " ") }}</a>
+          <span class="muted">{{ c.result.accuracy | pct }} · {{ c.result.questions }} questions</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section class="two-col">
+    <div>
+      <h2>Accuracy by field</h2>
+      <table>
+        <thead><tr><th>Field</th><th class="num">Correct</th><th class="num">Accuracy</th></tr></thead>
+        <tbody>
+        {% for row in per_field %}
+          <tr><td>{{ label(row.field) }}</td><td class="num">{{ row.correct }}/{{ row.total }}</td>
+            <td class="num">{{ row.accuracy | pct }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>By industry</h2>
+      <table>
+        <tbody>
+        {% for name, acc in s.by_industry.items() %}
+          <tr><td>{{ name }}</td><td class="num">{{ acc | pct(1) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <h2>By speaking style</h2>
+      <table>
+        <tbody>
+        {% for name, acc in s.by_style.items() %}
+          <tr><td>{{ name | replace("_", " ") }}</td><td class="num">{{ acc | pct(1) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every conversation in run {{ report.run_id }}</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>#</th><th>Industry</th><th>Style</th><th class="num">Accuracy</th>
+        <th class="num">Questions</th><th>Finished</th><th>Problems</th></tr></thead>
+      <tbody>
+      {% for c in report.conversations %}
+        {% set r = c.result %}
+        <tr>
+          <td><a href="/evals/runs/{{ report.run_id }}/{{ c.persona.id }}">{{ c.persona.id }}</a></td>
+          <td>{{ c.persona.category }}</td>
+          <td>{{ c.persona.style | replace("_", " ") }}</td>
+          <td class="num">{{ r.accuracy | pct }}</td>
+          <td class="num">{{ r.questions }}</td>
+          <td>{{ "yes" if r.completed else "no" }}</td>
+          <td class="problems">
+            {% if r.invented %}<span class="tag invented">invented: {{ r.invented | map("label") | join(", ") }}</span>{% endif %}
+            {% if r.wrong %}<span class="tag wrong">wrong: {{ r.wrong | map("label") | join(", ") }}</span>{% endif %}
+            {% if r.missed %}<span class="tag missed">missed: {{ r.missed | map("label") | join(", ") }}</span>{% endif %}
+            {% if r.error %}<span class="tag wrong">error</span>{% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </section>
+{% endif %}
+
+{% if history %}
+  <section>
+    <h2>Run history</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Run</th><th>Date</th><th>Note</th><th class="num">Personas</th><th class="num">Accuracy</th>
+        <th class="num">Invented</th><th class="num">Finished</th><th class="num">Avg questions</th></tr></thead>
+      <tbody>
+      {% for h in history | reverse %}
+        <tr {% if report and h.run_id == report.run_id %}class="current"{% endif %}>
+          <td><a href="/evals?run={{ h.run_id }}">{{ h.run_id }}</a></td>
+          <td class="nowrap">{{ h.created_at[:10] if h.created_at else "" }}</td>
+          <td>{{ h.config.note or "" }}</td>
+          <td class="num">{{ h.summary.conversations }}</td>
+          <td class="num">{{ h.summary.field_accuracy | pct(1) }}</td>
+          <td class="num">{{ h.summary.invented_values }}</td>
+          <td class="num">{{ h.summary.completion_rate | pct }}</td>
+          <td class="num">{{ "%.1f" | format(h.summary.avg_questions) }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

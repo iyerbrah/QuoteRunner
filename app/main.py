@@ -4,6 +4,8 @@ The web app: one page and a small JSON API around the intake agent.
   GET  /                                     the chat page
   POST /api/chat                             a customer message in; reply + form state out
   GET  /api/sessions/{id}/application.json   the finished application (once done)
+  GET  /evals                                eval results (latest full run, or ?run=N)
+  GET  /evals/runs/{run}/{persona}           one simulated conversation, scored
 
 Run locally:  .venv/bin/uvicorn app.main:app --reload
 """
@@ -22,7 +24,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field
 from sqlmodel import Session
 
-from app import config
+from app import config, eval_reports
 from app.agent.intake import (GREETING, IntakeState, build_submission, format_value,
                               handle_message, label, new_state)
 from app.agent.questions import PRIORITY, applicable_industry_questions
@@ -36,6 +38,9 @@ HERE = Path(__file__).parent
 app = FastAPI(title="QuoteRunner")
 app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
 templates = Jinja2Templates(directory=HERE / "templates")
+templates.env.filters["pct"] = lambda x, digits=0: f"{x * 100:.{digits}f}%"
+templates.env.globals["label"] = label
+templates.env.filters["label"] = label
 
 EXAMPLES = [
     {"label": "Roofing crew in Texas",
@@ -167,3 +172,56 @@ def download_application(session_id: str):
         return error(409, "The application isn't finished yet.")
     return Response(build_submission(state).model_dump_json(indent=2), media_type="application/json",
                     headers={"Content-Disposition": 'attachment; filename="application.json"'})
+
+
+# ---------------------------------------------------------------------------
+# Public eval results (read-only, from the committed report files)
+# ---------------------------------------------------------------------------
+RESULT_ORDER = {"invented": 0, "wrong": 1, "missed": 2, "correct": 3}
+
+
+def not_found(request: Request, message: str) -> HTMLResponse:
+    return templates.TemplateResponse(request, "not_found.html", {"message": message}, status_code=404)
+
+
+@app.get("/evals", response_class=HTMLResponse)
+def evals_page(request: Request, run: Optional[int] = None):
+    reports = eval_reports.all_reports()
+    report = eval_reports.load_report(run) if run is not None else eval_reports.latest_full_run(reports)
+    if run is not None and report is None:
+        return not_found(request, f"There is no eval run {run}.")
+    per_field = []
+    if report:
+        per_field = sorted(({"field": f, **counts} for f, counts in report["summary"]["per_field"].items()),
+                           key=lambda row: (row["accuracy"], row["field"]))  # weakest fields first
+    return templates.TemplateResponse(request, "evals.html", {
+        "report": report, "is_latest": run is None, "history": reports, "full_run": eval_reports.FULL_RUN,
+        "samples": eval_reports.samples(report) if report else [], "per_field": per_field,
+    })
+
+
+def result_rows(convo: dict) -> list[dict]:
+    """One row per scored field: what was true, what the agent recorded, and the verdict."""
+    persona, result, answers = convo["persona"], convo["result"], convo["answers"]
+    rows = []
+    for field, verdict in result["fields"].items():
+        if field in persona["unknown"]:
+            truth = "doesn't know"
+        elif field in persona["truth"]:
+            truth = format_value(field, persona["truth"][field])
+        else:
+            truth = "doesn't apply"
+        recorded = format_value(field, answers[field]) if field in answers else "—"
+        rows.append({"label": label(field), "truth": truth, "recorded": recorded, "result": verdict})
+    return sorted(rows, key=lambda row: RESULT_ORDER[row["result"]])
+
+
+@app.get("/evals/runs/{run_id}/{persona_id}", response_class=HTMLResponse)
+def transcript_page(request: Request, run_id: int, persona_id: int):
+    report = eval_reports.load_report(run_id)
+    convo = eval_reports.find_conversation(report, persona_id) if report else None
+    if convo is None:
+        return not_found(request, "That conversation doesn't exist.")
+    return templates.TemplateResponse(request, "transcript.html", {
+        "report": report, "convo": convo, "rows": result_rows(convo),
+    })

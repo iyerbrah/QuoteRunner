@@ -68,7 +68,7 @@ def run_eval(personas: list[Persona], workers: int, note: str | None = None) -> 
         run = EvalRun(note=note, config_json=json.dumps(run_config))
         db.add(run)
         db.commit()
-        run_id = run.id
+        run_id, started_at = run.id, run.created_at.isoformat(timespec="seconds")
 
     conversations = []
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -92,7 +92,8 @@ def run_eval(personas: list[Persona], workers: int, note: str | None = None) -> 
                                     scores_json=json.dumps(c["result"]), transcript_json=json.dumps(c["transcript"])))
         db.commit()
 
-    report = {"run_id": run_id, "config": run_config, "summary": summary, "conversations": conversations}
+    report = {"run_id": run_id, "created_at": started_at, "config": run_config, "summary": summary,
+              "conversations": conversations}
     REPORTS_DIR.mkdir(exist_ok=True)
     path = REPORTS_DIR / f"run-{run_id}.json"
     path.write_text(json.dumps(report, indent=2))

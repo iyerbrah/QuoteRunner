@@ -1,5 +1,6 @@
 {
   "run_id": 2,
+  "created_at": "2026-11-08T19:52:58+00:00",
   "config": {
     "models": {
       "agent": "gpt-5-nano",
