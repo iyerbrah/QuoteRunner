@@ -1,6 +1,6 @@
 """
-The SQLite database. For now it holds one table: a log of every LLM call.
-Later steps add sessions and eval runs here.
+The SQLite database: a log of every LLM call, and the web chat sessions.
+Step 4 adds eval runs here.
 """
 
 from datetime import datetime, timezone
@@ -32,6 +32,17 @@ class LLMCall(SQLModel, table=True):
     latency_ms: int = 0
     success: bool
     error: Optional[str] = None
+
+
+class ChatSession(SQLModel, table=True):
+    """One web conversation. The agent's IntakeState is stored as JSON."""
+
+    __tablename__ = "chat_sessions"
+
+    id: str = Field(primary_key=True)
+    created_at: datetime = Field(default_factory=utc_now)
+    updated_at: datetime = Field(default_factory=utc_now)
+    state_json: str
 
 
 _engine = None

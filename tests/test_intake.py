@@ -3,56 +3,12 @@ Tests for the intake agent. llm.chat is replaced by a fake that returns
 scripted extractions, so these test our logic, not the model.
 """
 
-import json
-from types import SimpleNamespace
-
 import pytest
 
-from app import llm
 from app.agent.intake import (DONE_MESSAGE, EXTRACT_CONTEXT, build_submission, grounded,
                               handle_message, new_state)
 from app.agent.schema import Submission
-
-
-class FakeLLM:
-    """Extraction calls (the ones with tools) return the next scripted dict;
-    reply calls return a fixed question text."""
-
-    def __init__(self, *extractions, reply="(next question)"):
-        self.extractions = list(extractions)
-        self.reply = reply
-        self.calls = []
-
-    def __call__(self, messages, tools=None, tool_choice=None, model_role="agent", session_id=None):
-        self.calls.append({"messages": messages, "tools": tools})
-        if tools:
-            args = self.extractions.pop(0)
-            arguments = args if isinstance(args, str) else json.dumps(args)
-            return SimpleNamespace(content=None, tool_calls=[
-                SimpleNamespace(function=SimpleNamespace(name="record_facts", arguments=arguments))])
-        return SimpleNamespace(content=self.reply, tool_calls=None)
-
-    @property
-    def reply_calls(self):
-        return [c for c in self.calls if not c["tools"]]
-
-
-def ext(values=None, uncertain=(), unknown=(), confirmed=(), approve=False):
-    return {"values": values or {}, "uncertain_fields": list(uncertain), "unknown_fields": list(unknown),
-            "confirmed_fields": list(confirmed), "confirms_summary": approve}
-
-
-def run(monkeypatch, *extractions, reply="(next question)"):
-    fake = FakeLLM(*extractions, reply=reply)
-    monkeypatch.setattr(llm, "chat", fake)
-    return fake
-
-
-ROOFER = {"description": "residential roofing", "industry_category": "roofing", "state": "Texas",
-          "num_employees": 8, "annual_revenue_usd": 1_200_000, "num_vehicles": 3, "prior_claims_3yr": 0,
-          "years_in_business": 6, "business_name": "Lone Star Roofing"}
-ROOF_DETAILS = {"roof_max_height_ft": 30, "roofing_work_type": "residential",
-                "uses_torch_down": False, "uses_subcontractors": False}
+from fakes import ROOF_DETAILS, ROOFER, ROOFER_MESSAGE, ext, run
 
 
 # --- Extraction ---------------------------------------------------------------
@@ -192,6 +148,17 @@ def test_echoed_answers_are_not_sent_back_for_confirmation(monkeypatch):
 
 
 
+def test_repeating_the_same_rough_number_counts_as_confirming(monkeypatch):
+    run(monkeypatch,
+        ext({"annual_revenue_usd": 900_000}, uncertain=["annual_revenue_usd"]),
+        ext({"annual_revenue_usd": 900_000}, uncertain=["annual_revenue_usd"]))
+    state = new_state()
+    handle_message(state, "around 900k")
+    handle_message(state, "yeah around 900k")  # asked to check, gave the same number
+    assert state.answers["annual_revenue_usd"] == 900_000
+    assert state.pending == {}
+
+
 def test_uncertain_only_applies_to_numbers(monkeypatch):
     run(monkeypatch, ext({"description": "roofing outfit", "industry_category": "roofing", "num_employees": 12},
                          uncertain=["description", "num_employees"]))
@@ -249,7 +216,7 @@ def complete_roofer(monkeypatch, *later):
     """A roofer who gives everything at once, then the scripted later turns."""
     fake = run(monkeypatch, ext({**ROOFER, **ROOF_DETAILS}), *later)
     state = new_state()
-    handle_message(state, "Lone Star Roofing: residential roofing in Texas, and everything else at once")
+    handle_message(state, ROOFER_MESSAGE)
     return state, fake
 
 

@@ -44,5 +44,10 @@ PRICES = {
 SESSION_COST_CAP_USD = float(os.getenv("SESSION_COST_CAP_USD", "0.05"))
 DAILY_COST_CAP_USD = float(os.getenv("DAILY_COST_CAP_USD", "2.00"))
 
+# --- Web limits ---------------------------------------------------------------
+MAX_MESSAGES_PER_SESSION = int(os.getenv("MAX_MESSAGES_PER_SESSION", "40"))  # customer messages
+MAX_MESSAGE_CHARS = 1000
+RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "20"))         # per IP
+
 # --- Storage ------------------------------------------------------------------
 DB_PATH = Path(os.getenv("DB_PATH", ROOT / "data" / "quoterunner.db"))

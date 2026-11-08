@@ -230,7 +230,10 @@ def apply_extraction(state: IntakeState, ext: Extraction) -> list[str]:
         if field in state.unknown:
             state.unknown.remove(field)
         is_number = isinstance(value, int) and not isinstance(value, bool)
-        if field in ext.uncertain_fields and is_number:
+        # Asked to check a value and they gave the same number again
+        # ("yeah, around 900k"): that's a confirmation, or we'd ask forever.
+        repeated = state.last_asked == "pending" and state.pending.get(field) == value
+        if field in ext.uncertain_fields and is_number and not repeated:
             state.pending[field] = value       # held back until the customer confirms
         else:
             state.answers[field] = value

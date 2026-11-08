@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QuoteRunner</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>QuoteRunner</h1>
+    <p>Describe your small business in a sentence. An AI agent asks only what's missing and
+      builds a verified insurance application, without guessing anything you didn't say.</p>
+  </header>
+
+  <main class="layout">
+    <section class="chat" aria-label="Conversation">
+      <div id="messages" class="messages" aria-live="polite">
+        <div class="msg agent">{{ greeting }}</div>
+      </div>
+
+      <div id="examples" class="examples">
+        <span>Try an example:</span>
+        {% for example in examples %}
+          <button type="button" data-message="{{ example.message }}">{{ example.label }}</button>
+        {% endfor %}
+      </div>
+
+      <form id="composer" class="composer">
+        <textarea id="input" rows="2" maxlength="{{ max_chars }}" placeholder="Type your answer…"
+                  aria-label="Your message" required></textarea>
+        <button id="send" type="submit">Send</button>
+      </form>
+    </section>
+
+    <aside class="panel" aria-label="Application">
+      <div class="panel-head">
+        <h2>Application</h2>
+        <span id="status" class="badge">Collecting</span>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Application progress">
+        <div id="progress-bar"></div>
+      </div>
+      <p id="progress-text" class="muted">0% complete</p>
+
+      <dl id="fields" class="fields"></dl>
+
+      <h3>Suggested coverage</h3>
+      <ul id="coverage" class="coverage"></ul>
+
+      <div id="flags-box" hidden>
+        <h3>Flags for the broker</h3>
+        <ul id="flags" class="flags"></ul>
+      </div>
+
+      <a id="download" class="button" hidden>Download application (JSON)</a>
+      <button id="restart" type="button" class="link">Start over</button>
+    </aside>
+  </main>
+
+  <script id="initial-form" type="application/json">{{ initial_form | tojson }}</script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

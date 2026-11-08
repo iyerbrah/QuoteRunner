@@ -1,0 +1,163 @@
+:root {
+  --bg: #f5f4f0;
+  --card: #ffffff;
+  --ink: #1d2125;
+  --muted: #646a70;
+  --line: #e3e1db;
+  --accent: #0f5c57;
+  --accent-ink: #ffffff;
+  --user: #e6f0ee;
+  --filled: #1f7a4d;
+  --checking: #9a6400;
+  --error-bg: #fbeceb;
+  --error: #9b2c24;
+  --radius: 12px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141618;
+    --card: #1c1f22;
+    --ink: #e8e6e1;
+    --muted: #9aa0a6;
+    --line: #2e3236;
+    --accent: #4fb3a9;
+    --accent-ink: #0c1413;
+    --user: #1f2e2c;
+    --filled: #6cc59a;
+    --checking: #e0b155;
+    --error-bg: #3a1f1d;
+    --error: #f2a39b;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; } /* so classes like .button can't un-hide things */
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.top { max-width: 1120px; margin: 0 auto; padding: 24px 16px 8px; }
+.top h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.01em; }
+.top p { margin: 4px 0 0; color: var(--muted); max-width: 62ch; }
+
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.chat, .panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* --- Chat ------------------------------------------------------------------ */
+.chat { display: flex; flex-direction: column; height: calc(100vh - 150px); min-height: 480px; }
+
+.messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+
+.msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  white-space: pre-wrap; /* keeps the summary's line breaks */
+  overflow-wrap: anywhere;
+}
+.msg.agent { align-self: flex-start; background: var(--bg); }
+.msg.user { align-self: flex-end; background: var(--user); }
+.msg.error { align-self: stretch; max-width: none; background: var(--error-bg); color: var(--error); }
+.msg.typing { color: var(--muted); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.4; } }
+
+.examples { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 0 16px 12px; }
+.examples span { color: var(--muted); font-size: 0.9rem; }
+.examples button {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.examples button:hover { border-color: var(--accent); color: var(--accent); }
+
+.composer { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+.composer textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--card);
+}
+.composer textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+button#send, .button {
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 18px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button:disabled { opacity: 0.5; cursor: default; }
+
+/* --- Application panel ----------------------------------------------------- */
+.panel { padding: 16px 18px; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+.panel-head { display: flex; justify-content: space-between; align-items: center; }
+.panel h2 { margin: 0; font-size: 1.1rem; }
+.panel h3 { margin: 18px 0 6px; font-size: 0.95rem; }
+
+.badge { font-size: 0.8rem; padding: 2px 10px; border-radius: 999px; background: var(--bg); color: var(--muted); }
+.badge[data-status="confirming"] { color: var(--checking); }
+.badge[data-status="done"] { background: var(--accent); color: var(--accent-ink); }
+
+.progress { height: 6px; background: var(--bg); border-radius: 999px; margin-top: 12px; overflow: hidden; }
+#progress-bar { height: 100%; width: 0; background: var(--accent); transition: width 0.3s; }
+.muted { color: var(--muted); font-size: 0.85rem; margin: 4px 0 8px; }
+
+.fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin: 0; font-size: 0.9rem; }
+.fields dt, .fields dd { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.fields dt { color: var(--muted); padding-right: 8px; }
+.fields dd { overflow-wrap: anywhere; }
+.fields dd.filled { color: var(--filled); font-weight: 600; }
+.fields dd.checking { color: var(--checking); }
+.fields dd.unknown { color: var(--muted); font-style: italic; }
+.fields dd.open { color: var(--line); }
+
+.coverage, .flags { margin: 0; padding-left: 18px; font-size: 0.9rem; }
+.coverage li, .flags li { margin-bottom: 6px; }
+.flags li { color: var(--checking); }
+
+#download { margin-top: 16px; width: 100%; text-align: center; }
+.link { display: block; margin: 12px auto 0; background: none; border: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; font-size: 0.85rem; }
+
+/* --- Phones: stack the chat above the panel ------------------------------- */
+@media (max-width: 800px) {
+  .top { padding-top: 16px; }
+  .top p { font-size: 0.95rem; }
+  .layout { grid-template-columns: 1fr; padding: 12px 16px; }
+  .chat { height: 70vh; min-height: 420px; }
+  .panel { position: static; max-height: none; }
+  .msg { max-width: 92%; }
+}
