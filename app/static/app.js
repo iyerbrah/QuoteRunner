@@ -1,4 +1,5 @@
-// The chat page: send a message to /api/chat, show the reply, redraw the form panel.
+// The home page. The first message is typed in the hero (or picked from an
+// example); from then on the page shows the chat and the live application.
 
 const $ = (id) => document.getElementById(id);
 const messages = $("messages");
@@ -23,14 +24,23 @@ function setBusy(on) {
   input.disabled = on;
 }
 
+// Switch from the hero to the chat, then send the first message.
+function start(text) {
+  text = text.trim();
+  if (!text) return;
+  document.body.classList.add("chatting");
+  $("workspace").hidden = false;
+  window.scrollTo({ top: 0 });
+  send(text);
+}
+
 async function send(text) {
   text = text.trim();
   if (busy || !text) return;
   setBusy(true);
-  $("examples").hidden = true;
   addMessage("user", text);
   input.value = "";
-  const typing = addMessage("agent typing", "…");
+  const typing = addMessage("agent typing", "Thinking…");
 
   try {
     const res = await fetch("/api/chat", {
@@ -41,7 +51,7 @@ async function send(text) {
     const data = await res.json().catch(() => ({}));
     typing.remove();
     if (!res.ok) {
-      addMessage("error", data.error || "Something went wrong. Please try again.");
+      addMessage("error", data.error || "That message didn't go through. Send it again.");
       return;
     }
     sessionId = data.session_id;
@@ -49,7 +59,7 @@ async function send(text) {
     renderForm(data.form);
   } catch {
     typing.remove();
-    addMessage("error", "Couldn't reach the server. Check your connection and try again.");
+    addMessage("error", "Couldn't reach the server. Check your connection and send it again.");
   } finally {
     setBusy(false);
     if (!input.disabled) input.focus();
@@ -66,6 +76,7 @@ function listItems(list, items, render) {
 
 function renderForm(form) {
   $("progress-bar").style.width = `${form.progress}%`;
+  document.querySelector(".progress").setAttribute("aria-valuenow", form.progress);
   $("progress-text").textContent = `${form.progress}% complete`;
   $("status").textContent = STATUS_TEXT[form.status];
   $("status").dataset.status = form.status;
@@ -75,7 +86,7 @@ function renderForm(form) {
     dt.textContent = f.label;
     const dd = document.createElement("dd");
     dd.className = f.status;
-    dd.textContent = f.status === "checking" ? `${f.value} (checking)` : f.value || "—";
+    dd.textContent = f.status === "checking" ? `${f.value}, checking` : f.value || "";
     return [dt, dd];
   });
   $("fields").replaceChildren(...rows);
@@ -96,6 +107,15 @@ function renderForm(form) {
   }
 }
 
+$("start").addEventListener("submit", (e) => {
+  e.preventDefault();
+  start($("start-input").value);
+});
+
+$("examples").addEventListener("click", (e) => {
+  if (e.target.dataset.message) start(e.target.dataset.message);
+});
+
 $("composer").addEventListener("submit", (e) => {
   e.preventDefault();
   send(input.value);
@@ -109,11 +129,6 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-$("examples").addEventListener("click", (e) => {
-  if (e.target.dataset.message) send(e.target.dataset.message);
-});
-
 $("restart").addEventListener("click", () => location.reload());
 
 renderForm(JSON.parse($("initial-form").textContent));
-input.focus();

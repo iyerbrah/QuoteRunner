@@ -5,6 +5,7 @@ The web app: one page and a small JSON API around the intake agent.
   GET  /healthz                              liveness check for systemd/uptime monitors
   POST /api/chat                             a customer message in; reply + form state out
   GET  /api/sessions/{id}/application.json   the finished application (once done)
+  GET  /how-it-works                         how the agent works, with the latest eval numbers
   GET  /evals                                eval results (latest full run, or ?run=N)
   GET  /evals/runs/{run}/{persona}           one simulated conversation, scored
 
@@ -120,11 +121,25 @@ def healthz():
     return {"status": "ok"}
 
 
+def latest_summary() -> tuple[Optional[dict], Optional[str]]:
+    """Headline numbers and date of the latest full eval run, if there is one."""
+    report = eval_reports.latest_full_run(eval_reports.all_reports())
+    return (report["summary"], report.get("created_at", "")) if report else (None, None)
+
+
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request):
     return templates.TemplateResponse(request, "index.html", {
-        "greeting": GREETING, "examples": EXAMPLES,
+        "greeting": GREETING, "examples": EXAMPLES, "proof": latest_summary()[0],
         "max_chars": config.MAX_MESSAGE_CHARS, "initial_form": form_view(new_state()),
+    })
+
+
+@app.get("/how-it-works", response_class=HTMLResponse)
+def how_it_works(request: Request):
+    summary, created_at = latest_summary()
+    return templates.TemplateResponse(request, "how_it_works.html", {
+        "active": "how", "summary": summary, "created_at": created_at,
     })
 
 
@@ -206,7 +221,8 @@ def evals_page(request: Request, run: Optional[int] = None):
         per_field = sorted(({"field": f, **counts} for f, counts in report["summary"]["per_field"].items()),
                            key=lambda row: (row["accuracy"], row["field"]))  # weakest fields first
     return templates.TemplateResponse(request, "evals.html", {
-        "report": report, "is_latest": run is None, "history": reports, "full_run": eval_reports.FULL_RUN,
+        "active": "evals", "report": report, "is_latest": run is None, "history": reports,
+        "full_run": eval_reports.FULL_RUN,
         "samples": eval_reports.samples(report) if report else [], "per_field": per_field,
     })
 
@@ -234,5 +250,5 @@ def transcript_page(request: Request, run_id: int, persona_id: int):
     if convo is None:
         return not_found(request, "That conversation doesn't exist.")
     return templates.TemplateResponse(request, "transcript.html", {
-        "report": report, "convo": convo, "rows": result_rows(convo),
+        "active": "evals", "report": report, "convo": convo, "rows": result_rows(convo),
     })

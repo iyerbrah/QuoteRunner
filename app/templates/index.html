@@ -1,65 +1,99 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QuoteRunner</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <header class="top">
-    <h1>QuoteRunner</h1>
-    <p>Describe your small business in a sentence. An AI agent asks only what's missing and
-      builds a verified insurance application, without guessing anything you didn't say.</p>
-    <p class="measured"><a href="/evals">How it's measured: tested on 50 simulated customers →</a></p>
-  </header>
+{% extends "base.html" %}
+{% block title %}QuoteRunner: a verified insurance application from one sentence{% endblock %}
+{% block body_class %}home{% endblock %}
 
-  <main class="layout">
-    <section class="chat" aria-label="Conversation">
-      <div id="messages" class="messages" aria-live="polite">
-        <div class="msg agent">{{ greeting }}</div>
-      </div>
+{% block hero %}
+<div class="hero" id="hero">
+  <div class="hero-copy">
+    <h1>What does your business do?</h1>
+    <p class="lede">Describe it in a sentence. QuoteRunner asks only for what's missing and fills in a
+      commercial insurance application, without guessing anything you didn't say.</p>
+    <form id="start" class="start">
+      <label class="sr-only" for="start-input">Describe your business</label>
+      <input id="start-input" type="text" maxlength="{{ max_chars }}" autocomplete="off" required
+             placeholder="A roofing crew in Houston, Texas">
+      <button type="submit">Start</button>
+    </form>
+  </div>
 
-      <div id="examples" class="examples">
-        <span>Try an example:</span>
-        {% for example in examples %}
-          <button type="button" data-message="{{ example.message }}">{{ example.label }}</button>
-        {% endfor %}
-      </div>
+  <figure class="forms" aria-label="Example: one sentence goes in, a checked application comes out">
+    <div class="sheet sheet-canary" aria-hidden="true"></div>
+    <div class="sheet sheet-pink" aria-hidden="true"></div>
+    <div class="sheet sheet-front">
+      <p class="sheet-title">Commercial insurance application</p>
+      <p class="sheet-label">One line in</p>
+      <p class="sheet-quote">“hey we're a roofing crew out of Houston, about 8 guys and 3 trucks”</p>
+      <p class="sheet-label">Application out</p>
+      <dl class="sheet-fields">
+        <div><dt>Industry</dt><dd>Roofing</dd></div>
+        <div><dt>State</dt><dd>Texas (TX)</dd></div>
+        <div><dt>Employees</dt><dd>8 <small>checked with you</small></dd></div>
+        <div><dt>Vehicles</dt><dd>3</dd></div>
+        <div class="blank"><dt>Annual revenue</dt><dd>Left blank, not guessed</dd></div>
+      </dl>
+      <p class="stamp" aria-hidden="true">Checked by code</p>
+    </div>
+  </figure>
+</div>
+{% endblock %}
 
-      <form id="composer" class="composer">
-        <textarea id="input" rows="2" maxlength="{{ max_chars }}" placeholder="Type your answer…"
-                  aria-label="Your message" required></textarea>
-        <button id="send" type="submit">Send</button>
-      </form>
-    </section>
+{% block content %}
+<section class="below" id="below">
+  <div class="below-inner">
+    <div class="chips" id="examples">
+      {% for example in examples %}
+        <button type="button" class="chip" data-message="{{ example.message }}">{{ example.label }}</button>
+      {% endfor %}
+    </div>
+    {% if proof %}
+      <p class="proof">Tested on <a href="/evals">{{ proof.conversations }} simulated customers</a>:
+        {{ proof.field_accuracy | pct }} of fields right, {{ proof.invented_values }} invented
+        {{ "value" if proof.invented_values == 1 else "values" }}, about {{ proof.avg_questions | round | int }}
+        questions instead of a {{ proof.form_fields }}-field form.</p>
+    {% endif %}
+  </div>
+</section>
 
-    <aside class="panel" aria-label="Application">
-      <div class="panel-head">
-        <h2>Application</h2>
-        <span id="status" class="badge">Collecting</span>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Application progress">
-        <div id="progress-bar"></div>
-      </div>
-      <p id="progress-text" class="muted">0% complete</p>
+<section class="workspace" id="workspace" hidden>
+  <div class="chat" aria-label="Conversation">
+    <div id="messages" class="messages" aria-live="polite">
+      <div class="msg agent">{{ greeting }}</div>
+    </div>
+    <form id="composer" class="composer">
+      <label class="sr-only" for="input">Your answer</label>
+      <textarea id="input" rows="2" maxlength="{{ max_chars }}" placeholder="Type your answer"
+                required></textarea>
+      <button id="send" type="submit">Send</button>
+    </form>
+  </div>
 
-      <dl id="fields" class="fields"></dl>
+  <aside class="panel" aria-label="Your application">
+    <div class="panel-head">
+      <h2>Your application</h2>
+      <span id="status" class="badge">Collecting</span>
+    </div>
+    <div class="progress" role="progressbar" aria-label="Application progress"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div id="progress-bar"></div>
+    </div>
+    <p id="progress-text" class="progress-text">0% complete</p>
 
-      <h3>Suggested coverage</h3>
-      <ul id="coverage" class="coverage"></ul>
+    <dl id="fields" class="fields"></dl>
 
-      <div id="flags-box" hidden>
-        <h3>Flags for the broker</h3>
-        <ul id="flags" class="flags"></ul>
-      </div>
+    <h3>Suggested coverage</h3>
+    <ul id="coverage" class="coverage"></ul>
 
-      <a id="download" class="button" hidden>Download application (JSON)</a>
-      <button id="restart" type="button" class="link">Start over</button>
-    </aside>
-  </main>
+    <div id="flags-box" hidden>
+      <h3>Flags for the broker</h3>
+      <ul id="flags" class="flags"></ul>
+    </div>
 
-  <script id="initial-form" type="application/json">{{ initial_form | tojson }}</script>
-  <script src="/static/app.js"></script>
-</body>
-</html>
+    <a id="download" class="button" hidden>Download application (JSON)</a>
+    <button id="restart" type="button" class="link-button">Start over</button>
+  </aside>
+</section>
+
+<script id="initial-form" type="application/json">{{ initial_form | tojson }}</script>
+{% endblock %}
+
+{% block scripts %}<script src="/static/app.js"></script>{% endblock %}

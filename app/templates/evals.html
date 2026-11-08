@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Eval results · QuoteRunner{% endblock %}
 
-{% block header %}
-  <h1>How QuoteRunner is measured</h1>
-  <p>{{ full_run }} simulated small-business owners, each with known true facts (and 1–2 facts they
-    don't know), talk to the same agent this site runs. Every field it records is checked against the truth.</p>
+{% block body_class %}evals{% endblock %}
+
+{% block hero %}
+<div class="page-hero">
+  <h1>Measured, not guessed</h1>
+  <p class="lede">{{ full_run }} simulated small-business owners, each with known true facts and 1–2 facts
+    they don't know, talk to the same agent this site runs. Every field it records is checked against the truth.</p>
+</div>
 {% endblock %}
 
 {% block content %}
+<div class="page">
 {% if not report %}
   <p>No eval runs yet.</p>
 {% else %}
@@ -15,9 +20,9 @@
   {% set cfg = report.config %}
   <p class="meta">
     {% if is_latest %}Latest full run:{% else %}Showing:{% endif %}
-    <strong>run {{ report.run_id }}</strong> · {{ report.created_at[:10] }} · {{ s.conversations }} conversations ·
-    agent {{ cfg.models.agent }} (reasoning {{ cfg.reasoning_effort }}) · commit {{ cfg.git_commit }}
-    {% if cfg.note %}· “{{ cfg.note }}”{% endif %}
+    <strong>run {{ report.run_id }}</strong>, {{ report.created_at[:10] }}, {{ s.conversations }} conversations.
+    Agent {{ cfg.models.agent }} with {{ cfg.reasoning_effort }} reasoning, code at commit {{ cfg.git_commit }}.
+    {% if cfg.note %}Note: “{{ cfg.note }}”{% endif %}
   </p>
 
   <section class="cards">
@@ -148,4 +153,5 @@
     </div>
   </section>
 {% endif %}
+</div>
 {% endblock %}

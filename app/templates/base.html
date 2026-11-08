@@ -3,16 +3,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}QuoteRunner evals{% endblock %}</title>
+  <title>{% block title %}QuoteRunner{% endblock %}</title>
+  <meta name="description" content="{% block description %}Describe a small business in one sentence. QuoteRunner asks only for what's missing and fills in a verified commercial insurance application, without guessing.{% endblock %}">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
   <link rel="stylesheet" href="/static/style.css">
 </head>
-<body>
-  <header class="top">
-    <nav class="nav"><a href="/">← Try the agent</a> <a href="/evals">Eval results</a></nav>
-    {% block header %}{% endblock %}
+<body class="{% block body_class %}{% endblock %}">
+  <header class="band">
+    <div class="band-inner">
+      <nav class="topbar" aria-label="Main">
+        <a class="wordmark" href="/">QuoteRunner</a>
+        <div class="toplinks">
+          <a href="/how-it-works" {% if active == "how" %}aria-current="page"{% endif %}>How it works</a>
+          <a href="/evals" {% if active == "evals" %}aria-current="page"{% endif %}>Eval results</a>
+        </div>
+      </nav>
+      {% block hero %}{% endblock %}
+    </div>
   </header>
-  <main class="page">
+
+  <main>
     {% block content %}{% endblock %}
   </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-row">
+        <p>Built by <a href="https://github.com/iyerbrah">Ram Iyer</a></p>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="/how-it-works">How it works</a>
+          <a href="/evals">Eval results</a>
+          <a href="https://github.com/iyerbrah/QuoteRunner">Source on GitHub</a>
+        </nav>
+      </div>
+      <p class="disclaimer">QuoteRunner is a portfolio demo. It doesn't sell, quote or bind insurance, isn't
+        affiliated with any insurer or broker, and its coverage suggestions are general rules, not advice.
+        The businesses in the evals are simulated.</p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

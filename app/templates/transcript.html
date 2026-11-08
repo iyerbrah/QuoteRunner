@@ -3,15 +3,21 @@
 {% set r = convo.result %}
 {% block title %}Run {{ report.run_id }} · persona {{ p.id }} · QuoteRunner{% endblock %}
 
-{% block header %}
-  <p class="meta"><a href="/evals?run={{ report.run_id }}">← Run {{ report.run_id }}</a></p>
-  <h1>Persona #{{ p.id }}: {{ p.truth.description }}</h1>
-  <p>{{ p.category }} · {{ p.truth.state }} · speaks “{{ p.style | replace("_", " ") }}” ·
-    doesn't know: {{ p.unknown | map("label") | join(", ") }}
-    {% if p.change %}· says {{ label(p.change.field) | lower }} = {{ p.change.first }} first, then corrects it{% endif %}</p>
+{% block body_class %}evals{% endblock %}
+
+{% block hero %}
+<div class="page-hero">
+  <p class="back"><a href="/evals?run={{ report.run_id }}">Back to run {{ report.run_id }}</a></p>
+  <h1>Persona {{ p.id }}: {{ p.truth.description }}</h1>
+  <p class="lede">A {{ p.category if p.category != "other" else "small business" }} in {{ p.truth.state }}
+    whose owner talks in a “{{ p.style | replace("_", " ") }}” style and doesn't know:
+    {{ p.unknown | map("label") | map("lower") | join(" or ") }}.
+    {% if p.change %}They say {{ label(p.change.field) | lower }} is {{ p.change.first }} first, then correct it.{% endif %}</p>
+</div>
 {% endblock %}
 
 {% block content %}
+<div class="page">
   <section class="cards">
     <div class="card"><span class="big">{{ r.accuracy | pct }}</span><span>field accuracy</span></div>
     <div class="card {% if r.invented %}warn{% endif %}"><span class="big">{{ r.invented | length }}</span>
@@ -43,4 +49,5 @@
       </div>
     </div>
   </section>
+</div>
 {% endblock %}

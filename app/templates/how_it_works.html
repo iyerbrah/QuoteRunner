@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}How it works · QuoteRunner{% endblock %}
+{% block body_class %}how{% endblock %}
+
+{% block hero %}
+<div class="page-hero">
+  <h1>The model listens. Code verifies.</h1>
+  <p class="lede">An LLM is good at reading a messy sentence and bad at knowing when to stop. So it only
+    reads; everything that decides what goes on the application is plain, tested Python.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="page">
+
+  <section class="steps-section">
+    <div class="steps-intro">
+      <h2>From one sentence to a verified application</h2>
+      <p>Every customer message goes through the same five steps. The model reads the message and words
+        the next question; everything else is code, which is instant, exact and covered by tests.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <h3>Read the message</h3>
+        <p>One model call reads the customer's latest reply, with only the question it answers as
+          context, and returns a forced tool call: the facts stated, the ones that were vague
+          (“about a dozen”), and the ones the customer said they don't know. It is told never to fill in
+          a typical value.</p>
+      </li>
+      <li>
+        <h3>Check it in code</h3>
+        <p>Pydantic validates every value: real US states (“Texas” becomes TX), sensible numbers, known
+          industries. Then the no-guess rules: “don't know” counts only for the question just asked, a
+          saved answer changes only when we asked about it, and a business name or description must be
+          made of words the customer actually typed.</p>
+      </li>
+      <li>
+        <h3>Pick the next question</h3>
+        <p>A fixed priority order, plus typed follow-ups for each industry: a roofer is asked roof height
+          and torch-down work, a daycare its licensed capacity and pool. Anything answered, unknown or
+          not applicable is skipped, so most owners answer about seven questions. A second model call
+          only words the chosen question naturally.</p>
+      </li>
+      <li>
+        <h3>Confirm before saving</h3>
+        <p>Vague numbers are held back and read back to the customer to confirm. When nothing is left to
+          ask, code writes the summary from the validated answers, so it can't misstate anything. The
+          customer approves it or corrects it.</p>
+      </li>
+      <li>
+        <h3>Coverage and flags by rule</h3>
+        <p>Suggested policies and hard-to-place flags (roofs over 40 ft, torch-down work, alcohol over half
+          of sales, two or more recent claims) come from plain Python rules a broker can read and
+          disagree with, never from the model.</p>
+      </li>
+    </ol>
+  </section>
+
+  {% if summary %}
+  <section>
+    <h2>Measured, not guessed</h2>
+    <p class="section-lede">{{ summary.conversations }} simulated owners, each with known true facts and 1–2
+      facts they don't know, talk to the same agent this site runs. Every field it records is scored
+      against the truth. Latest full run: {{ created_at[:10] }}.</p>
+    <div class="stats">
+      <div class="stat"><p class="stat-name">Field accuracy</p>
+        <p class="stat-value">{{ summary.field_accuracy | pct(1) }}</p>
+        <p class="stat-note">every field that applies to the business</p></div>
+      <div class="stat"><p class="stat-name">Invented values</p>
+        <p class="stat-value">{{ summary.invented_values }}</p>
+        <p class="stat-note">fields filled that the owner couldn't have stated</p></div>
+      <div class="stat"><p class="stat-name">Conversations finished</p>
+        <p class="stat-value">{{ summary.completion_rate | pct }}</p>
+        <p class="stat-note">within 25 customer messages</p></div>
+      <div class="stat"><p class="stat-name">Questions asked</p>
+        <p class="stat-value">{{ "%.1f" | format(summary.avg_questions) }}</p>
+        <p class="stat-note">on average, instead of a {{ summary.form_fields }}-field form</p></div>
+      <div class="stat"><p class="stat-name">Cost per conversation</p>
+        <p class="stat-value">${{ "%.4f" | format(summary.avg_cost_agent_usd) }}</p>
+        <p class="stat-note">gpt-5-nano, with per-session and daily spend caps</p></div>
+    </div>
+    <p class="more"><a href="/evals">See every conversation, field by field</a></p>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>Built with</h2>
+    <dl class="stack">
+      <div><dt>FastAPI, Jinja2, vanilla JS</dt><dd>one Python app for the pages and the API</dd></div>
+      <div><dt>OpenAI gpt-5-nano</dt><dd>forced tool calls for extraction, low reasoning effort to keep it fast</dd></div>
+      <div><dt>Pydantic v2</dt><dd>every value validated in code, the ACORD 125-style application schema</dd></div>
+      <div><dt>SQLite with SQLModel</dt><dd>chat sessions, a cost log of every LLM call, eval runs</dd></div>
+      <div><dt>pytest</dt><dd>unit tests with a fake model, no live API calls</dd></div>
+      <div><dt>Own Ubuntu server</dt><dd>nginx with Let's Encrypt HTTPS in front, uvicorn kept running by systemd</dd></div>
+    </dl>
+    <p class="more">The code, the tests and every eval report are in the
+      <a href="https://github.com/iyerbrah/QuoteRunner">repository on GitHub</a>.</p>
+  </section>
+
+  <section class="cta">
+    <a class="button big" href="/">Try it: describe your business</a>
+  </section>
+</div>
+{% endblock %}
