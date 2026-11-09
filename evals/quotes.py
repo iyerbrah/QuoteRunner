@@ -45,17 +45,26 @@ REPORTS_DIR = Path(__file__).parent / "reports"
 TEXT_SOURCES = {"description"}  # free text: checked for presence, not exact words
 
 
+def expected_text(transform: str, value, option_map: dict):
+    """The carrier's expected value, written independently of the agent's own transform
+    code: ground truth that reused it would share its bugs and never catch them."""
+    if transform == "thousands":
+        return str(round(value / 1000))
+    if transform == "yes_no" or isinstance(value, bool):
+        return "yes" if value else "no"
+    if transform == "choice":
+        return option_map.get(str(value))
+    return str(value)
+
+
 def expected_payload(slug: str, facts: dict) -> dict[str, str]:
     """What this carrier should receive, given the facts the owner has stated."""
-    fields = {f.name: f for f in CARRIERS[slug].fields}
     payload = {}
     for name, spec in REFERENCE_MAPPINGS[slug].items():
         source = spec[0]
         if source not in facts:                  # unknown to the owner, or doesn't apply
             continue
-        m = submit.FieldMap(portal_field=name, source=source, transform=spec[1],
-                            option_map=spec[2] if len(spec) > 2 else {})
-        text = submit.apply_transform(m, facts[source], fields[name])
+        text = expected_text(spec[1], facts[source], spec[2] if len(spec) > 2 else {})
         if text is not None:
             payload[name] = text
     return payload
@@ -125,15 +134,9 @@ def score_row(persona: Persona, r, facts: dict, stage: str) -> dict:
             "fields": score_fields(r.carrier, facts, got) if r.reference else {}}
 
 
-def run(fresh_mapping: bool = True) -> dict:
-    chat_report = latest_full_run(all_reports())
-    session_id = f"quotes-eval-{int(time.time())}"
-    if fresh_mapping:
-        with Session(get_engine()) as db:
-            db.exec(delete(PortalMapping))
-            db.commit()
-    submit.portal_client = lambda: TestClient(__import__("app.main", fromlist=["app"]).app)
-
+def replay(chat_report: dict, session_id: str, verbose: bool = True) -> tuple[list[dict], list[float]]:
+    """Send every finished application in a chat report to all carriers, with one follow-up
+    for facts the owner didn't know. Returns the scored rows and the time per business."""
     rows, timings = [], []
     finished = [c for c in chat_report["conversations"] if c["result"]["completed"]]
     # Rebuilt from the seed (identical to the report's) so the hidden true values are there.
@@ -158,8 +161,13 @@ def run(fresh_mapping: bool = True) -> dict:
                     final = submit.submit_to_carrier(r.carrier, after, session_id=session_id)
                     rows.append(score_row(persona, final, {**persona.truth, **looked_up}, "after_followup"))
             line.append(f"{r.carrier}={r.status}" + (f"->{final.status}" if final is not r else ""))
-        print(f"[{i + 1:>2}/{len(finished)}] #{persona.id:<3}{persona.category:<11}" + "  ".join(line), flush=True)
+        if verbose:
+            print(f"[{i + 1:>2}/{len(finished)}] #{persona.id:<3}{persona.category:<11}" + "  ".join(line), flush=True)
+    return rows, timings
 
+
+def summarize(rows: list[dict], businesses: int) -> dict:
+    """The headline numbers for a set of scored rows."""
     arrived = [r for r in rows if r["fields"]]
     verdicts = [v for r in arrived for v in r["fields"].values()]
     first = [r for r in rows if r["stage"] == "first"]
@@ -172,8 +180,7 @@ def run(fresh_mapping: bool = True) -> dict:
     def with_a_quote(rs):
         return len({r["persona_id"] for r in rs if r["status"] == "quoted"})
 
-    businesses = len(finished)
-    summary = {
+    return {
         "businesses": businesses,
         "submissions": len(rows),
         "followups": sum(r["stage"] == "after_followup" for r in rows),
@@ -187,12 +194,28 @@ def run(fresh_mapping: bool = True) -> dict:
         "businesses_with_a_quote_first": with_a_quote(first),
         "businesses_with_a_quote": with_a_quote(final),
         "quotes": sum(r["status"] == "quoted" for r in final),
+        "by_carrier": by_carrier,
+    }
+
+
+def run(fresh_mapping: bool = True) -> dict:
+    chat_report = latest_full_run(all_reports())
+    session_id = f"quotes-eval-{int(time.time())}"
+    if fresh_mapping:
+        with Session(get_engine()) as db:
+            db.exec(delete(PortalMapping))
+            db.commit()
+    submit.portal_client = lambda: TestClient(__import__("app.main", fromlist=["app"]).app)
+
+    rows, timings = replay(chat_report, session_id)
+    businesses = sum(c["result"]["completed"] for c in chat_report["conversations"])
+    summary = summarize(rows, businesses)
+    summary.update({
         "first_run_seconds": round(timings[0], 1) if timings else 0,
         "seconds_per_business": round(sum(timings[1:]) / max(1, len(timings) - 1), 3),
         "mapping_cost_usd": llm.session_cost(session_id),
         "mapping_accuracy": mapping_accuracy(),
-        "by_carrier": by_carrier,
-    }
+    })
     REPORTS_DIR.mkdir(exist_ok=True)
     run_id = 1 + max([int(p.stem.split("-")[1]) for p in REPORTS_DIR.glob("quotes-*.json")] or [0])
     report = {"run_id": run_id, "created_at": utc_now().isoformat(timespec="seconds"),
