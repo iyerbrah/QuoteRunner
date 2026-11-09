@@ -25,6 +25,8 @@ identical code, so the ranges show run-to-run variation, not cherry-picking.
 In insurance, a made-up answer can void a policy, so **invented values** is the number that matters
 most: every persona has 1–2 facts they genuinely don't know, and any guess shows up in the score.
 
+[![The public eval results page: headline numbers, per-field accuracy and every conversation](docs/evals.png)](https://quoterunner.ramiyer.tech/evals)
+
 ## How it works
 
 One customer message, end to end:
