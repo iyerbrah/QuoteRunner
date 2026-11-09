@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ carrier.name }} · Quote portal</title>
+  <style>
+    body { margin: 0; font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #1c2230; background: #f4f5f7; }
+    .demo { background: #fff4cc; color: #5c4400; text-align: center; padding: 6px 12px; font-size: 13px; }
+    header { background: {{ carrier.color }}; color: #fff; padding: 18px 24px; }
+    header h1 { margin: 0; font-size: 20px; }
+    header p { margin: 2px 0 0; opacity: 0.85; font-size: 14px; }
+    main { max-width: 640px; margin: 24px auto; padding: 0 16px; }
+    form, .result { background: #fff; border: 1px solid #d8dbe2; border-radius: 6px; padding: 20px 22px; }
+    .row { margin-bottom: 14px; }
+    label { display: block; font-weight: 600; font-size: 14px; }
+    small { display: block; color: #5c6270; font-size: 12px; }
+    input, select { width: 100%; box-sizing: border-box; padding: 7px 9px; border: 1px solid #b9bdc7; border-radius: 4px; font: inherit; margin-top: 3px; }
+    button { background: {{ carrier.color }}; color: #fff; border: 0; border-radius: 4px; padding: 9px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+    .req { color: #a3302a; }
+    .result h2 { margin: 0 0 6px; font-size: 18px; }
+    .errors li { color: #a3302a; }
+  </style>
+</head>
+<body>
+  <p class="demo">Fictional carrier portal for the QuoteRunner demo. Not a real insurer.</p>
+  <header><h1>{{ carrier.name }}</h1><p>{{ carrier.kind }}: new business quote</p></header>
+  <main>
+  {% if result %}
+    <div class="result">
+      <div id="result" data-status="{{ result.status }}" data-premium="{{ result.premium or '' }}"
+           data-reference="{{ result.reference }}" data-reason="{{ result.reason }}">
+        {% if result.status == "quoted" %}
+          <h2>Quote {{ result.reference }}</h2>
+          <p>Annual premium: <strong>${{ "{:,}".format(result.premium) }}</strong></p>
+        {% elif result.status == "declined" %}
+          <h2>Declined</h2><p>{{ result.reason }}</p>
+        {% else %}
+          <h2>We couldn't process this submission</h2>
+          <ul class="errors">{% for e in result.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+      </div>
+      <p><a href="/portals/{{ carrier.slug }}">Start a new quote</a></p>
+    </div>
+  {% else %}
+    <form method="post" action="/portals/{{ carrier.slug }}">
+      {% for f in carrier.fields %}
+        <div class="row">
+          <label for="f-{{ f.name }}">{{ f.label }}{% if f.required %} <span class="req">*</span>{% endif %}</label>
+          {% if f.hint %}<small id="h-{{ f.name }}">{{ f.hint }}</small>{% endif %}
+          {% if f.type == "select" %}
+            <select id="f-{{ f.name }}" name="{{ f.name }}" {% if f.required %}required{% endif %}
+                    {% if f.hint %}aria-describedby="h-{{ f.name }}"{% endif %}>
+              <option value=""></option>
+              {% for o in f.options %}<option value="{{ o }}">{{ o }}</option>{% endfor %}
+            </select>
+          {% else %}
+            <input id="f-{{ f.name }}" name="{{ f.name }}" type="{{ f.type }}" {% if f.type == "number" %}min="0" step="1"{% endif %}
+                   {% if f.required %}required{% endif %} {% if f.hint %}aria-describedby="h-{{ f.name }}"{% endif %}>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit">Request quote</button>
+    </form>
+  {% endif %}
+  </main>
+</body>
+</html>

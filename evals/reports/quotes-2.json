@@ -1,0 +1,4775 @@
+{
+  "run_id": 2,
+  "created_at": "2026-11-09T19:28:15+00:00",
+  "config": {
+    "agent_model": "gpt-5-nano",
+    "reasoning_effort": "low",
+    "git_commit": "201f2ee-dirty",
+    "chat_run": 4
+  },
+  "summary": {
+    "businesses": 45,
+    "submissions": 252,
+    "followups": 117,
+    "arrived": 124,
+    "values_checked": 1285,
+    "values_correct": 1.0,
+    "invented_at_carrier": 0,
+    "wrong_at_carrier": 0,
+    "missing_at_carrier": 0,
+    "decisions_match": 1.0,
+    "businesses_with_a_quote_first": 3,
+    "businesses_with_a_quote": 45,
+    "quotes": 92,
+    "first_run_seconds": 10.1,
+    "seconds_per_business": 0.006,
+    "mapping_cost_usd": 0.003909,
+    "mapping_accuracy": {
+      "granite": 1.0,
+      "harborline": 1.0,
+      "lakeside": 1.0
+    },
+    "by_carrier": {
+      "granite": {
+        "quoted": 30,
+        "declined": 15,
+        "needs_info": 0,
+        "not_offered": 0,
+        "error": 0
+      },
+      "harborline": {
+        "quoted": 45,
+        "declined": 0,
+        "needs_info": 0,
+        "not_offered": 0,
+        "error": 0
+      },
+      "lakeside": {
+        "quoted": 17,
+        "declined": 17,
+        "needs_info": 0,
+        "not_offered": 11,
+        "error": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 4880,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 7180,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 1,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 4180,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 12670,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 20650,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 2,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 10550,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 4,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 69800,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 4,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 4,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 9100,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 15230,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 5,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 7820,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11400,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 16240,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 7,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 8,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 8,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 8,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 8,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 8700,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 8,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 9480,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 15590,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 9,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 8040,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 1900,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 2820,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 10,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 1560,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 5370,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6840,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 11,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 12,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 12,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 12,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 12,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 14000,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 12,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 27960,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 46910,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 13,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 24070,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11160,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 22240,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 14,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Alcohol above 40% of sales is outside our BOP program.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 2010,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 15,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 16,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 16,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 16,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 16,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 28990,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 16,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 21120,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 31120,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 17,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 18110,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6830,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 18,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Three or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 4330,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6180,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 19,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 20,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 20,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We don't write torch-down or other hot work.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 20,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 20,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 93900,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 20,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 7860,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11510,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 21,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6680,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 22,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 5560,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 22,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6780,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 22,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 10060,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 25550,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 23,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 24,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 24,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 61360,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 24,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 24,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 102660,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 24,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 12880,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 19050,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 25,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11110,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 17240,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 26190,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 26,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 14480,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 10930,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 27,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 28,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 28,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 28,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 28,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 38320,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 28,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 14800,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 29,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We don't write daycares with a pool.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 15150,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 21810,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 30,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 12550,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 13200,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 18810,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 31,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 32,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 32,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11580,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 32,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 32,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 16890,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 32,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 21680,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 32030,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 33,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 18660,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 51920,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 34,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Our BOP program is for businesses under $5M in revenue.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 8270,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11710,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 35,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11760,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 37,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We don't write daycares with a pool.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Two or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 25870,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 38,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Three or more losses in 3 years are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 5150,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 7260,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 39,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 40,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 8460,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 40,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 14030,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 40,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 3870,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 5040,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 41,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 3300,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 4040,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 6120,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Claims in last 3 years.",
+      "missing": [
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 42,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 3380,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 7860,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 11120,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 43,
+      "industry": "other",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "We only write restaurants, daycares, retail stores and offices.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 44,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 44,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 27380,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 44,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 44,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 32540,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 44,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 1620,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 2400,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 45,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 1400,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 48,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 48,
+      "industry": "roofing",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Working heights above 40 ft are outside our appetite.",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 48,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue, Claims in last 3 years.",
+      "missing": [
+        "annual_revenue_usd",
+        "prior_claims_3yr"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 48,
+      "industry": "roofing",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 30440,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 48,
+      "industry": "roofing",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "not_offered",
+      "expected_status": "not_offered",
+      "premium": null,
+      "reason": "Lakeside Commercial's form has no \u201cType of business\u201d option for roofing, so nothing was sent.",
+      "missing": [],
+      "fields": {}
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 30100,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 44450,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 49,
+      "industry": "daycare",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "declined",
+      "expected_status": "declined",
+      "premium": null,
+      "reason": "Our BOP program is for businesses under $5M in revenue.",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Granite Mutual needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "granite",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 9930,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "insured_name": "correct",
+        "risk_state": "correct",
+        "business_class": "correct",
+        "full_time_employees": "correct",
+        "gross_sales_thousands": "correct",
+        "owned_autos": "correct",
+        "losses_3yr": "correct",
+        "yrs_in_business": "correct",
+        "max_height_ft": "correct",
+        "hot_work": "correct"
+      }
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Harborline Specialty needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "harborline",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 15060,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "applicant_legal_name": "correct",
+        "location_state": "correct",
+        "operations": "correct",
+        "class_code": "correct",
+        "annual_revenue": "correct",
+        "headcount": "correct",
+        "prior_claims": "correct",
+        "roof_height_ft": "correct",
+        "torch_down": "correct",
+        "subcontracted_percent": "correct",
+        "liquor_percent": "correct"
+      }
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "first",
+      "status": "needs_info",
+      "expected_status": "needs_info",
+      "premium": null,
+      "reason": "Lakeside Commercial needs: Annual revenue.",
+      "missing": [
+        "annual_revenue_usd"
+      ],
+      "fields": {}
+    },
+    {
+      "persona_id": 50,
+      "industry": "restaurant",
+      "carrier": "lakeside",
+      "stage": "after_followup",
+      "status": "quoted",
+      "expected_status": "quoted",
+      "premium": 8330,
+      "reason": "",
+      "missing": [],
+      "fields": {
+        "business_name": "correct",
+        "state": "correct",
+        "business_type": "correct",
+        "revenue": "correct",
+        "employees": "correct",
+        "prior_losses": "correct",
+        "seats": "correct",
+        "alcohol_percent": "correct",
+        "children_capacity": "correct",
+        "swimming_pool": "correct"
+      }
+    }
+  ]
+}

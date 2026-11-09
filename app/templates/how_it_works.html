@@ -16,7 +16,7 @@
   <section class="steps-section">
     <div class="steps-intro">
       <h2>From one sentence to a verified application</h2>
-      <p>Every customer message goes through the same five steps. The model reads the message and words
+      <p>Every application goes through the same six steps. The model reads the message and words
         the next question; everything else is code, which is instant, exact and covered by tests.</p>
     </div>
     <ol class="steps">
@@ -48,6 +48,15 @@
           customer approves it or corrects it.</p>
       </li>
       <li>
+        <h3>Submit to three carriers</h3>
+        <p>The submission agent reads each carrier's quote form like any website. The model maps the
+          form's fields to the application, three times independently, and only what most samples agree
+          on is kept and cached; it never sees or writes a value. Code fills every value from the
+          application, takes units from the form's own words (a form that says "thousands" gets dollars
+          / 1000), and stops with "needs info" instead of guessing a missing fact. Quotes, declines and
+          follow-up questions come back side by side.</p>
+      </li>
+      <li>
         <h3>Coverage and flags by rule</h3>
         <p>Suggested policies and hard-to-place flags (roofs over 40 ft, torch-down work, alcohol over half
           of sales, two or more recent claims) come from plain Python rules a broker can read and
@@ -75,6 +84,11 @@
       <div class="stat"><p class="stat-name">Questions asked</p>
         <p class="stat-value">{{ "%.1f" | format(summary.avg_questions) }}</p>
         <p class="stat-note">on average, instead of a {{ summary.form_fields }}-field form</p></div>
+      {% if quotes %}
+      <div class="stat"><p class="stat-name">Values right at the carriers</p>
+        <p class="stat-value">{{ quotes.values_correct | pct(1) }}</p>
+        <p class="stat-note">{{ "{:,}".format(quotes.values_checked) }} values, {{ quotes.invented_at_carrier }} invented, across {{ quotes.submissions }} portal submissions</p></div>
+      {% endif %}
       <div class="stat"><p class="stat-name">Cost per conversation</p>
         <p class="stat-value">${{ "%.4f" | format(summary.avg_cost_agent_usd) }}</p>
         <p class="stat-note">gpt-5-nano, with per-session and daily spend caps</p></div>

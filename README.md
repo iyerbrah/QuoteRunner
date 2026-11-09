@@ -1,7 +1,8 @@
 # QuoteRunner
 
-An AI agent that turns a one-line description of a small business into a verified commercial
-insurance application (ACORD 125-style), asking only for what's missing and never guessing.
+An AI broker agent: one sentence of chat becomes a verified commercial insurance application
+(ACORD 125-style), which is submitted to three carrier portals and comes back as quotes compared side
+by side. It asks only for what's missing and never guesses.
 
 **[Live demo](https://quoterunner.ramiyer.tech)** · [How it works](https://quoterunner.ramiyer.tech/how-it-works) ·
 [Eval results](https://quoterunner.ramiyer.tech/evals) · 60-second demo video (link coming)
@@ -21,6 +22,17 @@ identical code, so the ranges show run-to-run variation, not cherry-picking.
 | Conversations finished | **90–98%** |
 | Questions asked | **6.8–7.5**, instead of a 25-field form |
 | Cost per conversation | **$0.0026–0.0029** (gpt-5-nano), plus $0.0008 for the simulated customer |
+
+The finished applications were then sent to the three carrier portals
+([quotes runs 2 and 3](evals/reports), identical results):
+
+| | Quotes runs 2 and 3 |
+|---|---|
+| Values received by carriers that were correct | **100%** of 1,285 |
+| Invented values that reached a carrier | **0** across 252 portal submissions |
+| Carrier decisions matching their rules applied to the true facts | **100%** |
+| Businesses quoted | **45 of 45**, after one follow-up for facts the owner didn't know (3 before it) |
+| Speed and cost | portal mapping learned once for $0.004, then **6 ms** per business |
 
 In insurance, a made-up answer can void a policy, so **invented values** is the number that matters
 most: every persona has 1–2 facts they genuinely don't know, and any guess shows up in the score.
@@ -43,6 +55,26 @@ flowchart TD
     S --> B
     X & W -.-> L[("llm.py: cost per call,<br/>session and daily caps,<br/>SQLite call log")]
 ```
+
+Then, once the customer approves the application, the submission agent takes it to every carrier at once:
+
+```mermaid
+flowchart TD
+    A["Verified application"] --> G["GET the carrier's quote form (HTTP)"]
+    G --> F["Code: read the form's fields,<br/>labels, options and hints"]
+    F --> M["LLM, 3 samples in parallel:<br/>map form fields to application fields<br/>(names only, never values)"]
+    M --> K["Code: keep only what most samples agree on,<br/>check transforms and options, cache it"]
+    K --> P["Code: fill every value from the application,<br/>units from the form's own words"]
+    P -->|a required fact is unknown| Q["Needs info: ask the customer, resubmit"]
+    P --> S["POST the form, read the result"]
+    S --> C["Quote / decline / not offered,<br/>cheapest first"]
+```
+
+The carriers (Granite Mutual, Harborline Specialty, Lakeside Commercial) are **fictional portals built
+into the app**, because real carriers only give portal access to licensed, appointed brokers. They
+differ the way real ones do: different field names, revenue in dollars on one and in thousands on
+another, their own class names, appetite and pricing. The agent knows none of that; it reads each form
+like any website.
 
 How the numbers above are produced:
 
@@ -78,6 +110,17 @@ flowchart LR
   conditions; adding one needs no other code change (there's a test for that).
 - **Measured with simulated customers.** 50 seeded personas with ground truth, scored field by field.
   The eval runner calls the same `handle_message()` as the website.
+- **The model maps, code fills.** For carrier portals the model only says which form field holds which
+  application fact ("their `gross_sales_thousands` is our `annual_revenue_usd`"). It never sees or
+  writes a value, so it can't invent one; code fills every value from the verified application.
+- **Consensus, not one guess.** Each portal is mapped by 3 independent samples in parallel, and only
+  what most of them agree on is kept. Disagreement becomes "not offered" or "needs info", never a guess.
+  The mapping is cached by a hash of the form, so it's learned once per portal and relearned only when
+  the form changes.
+- **Units from the form's own words.** A form that says "in thousands" gets dollars / 1000; any other
+  gets dollars. A dropdown map the model wrote backwards is flipped only where that's unambiguous.
+- **Needs info instead of a guess.** A required fact the owner didn't know stops the submission; the
+  customer is asked once, the answer is validated like any other, and the carrier is resubmitted.
 - **Cost controls.** Every LLM call is logged with tokens, cost and latency. Per-session and daily caps
   stop the app politely; messages per session and per IP are capped too.
 
@@ -96,6 +139,19 @@ label fixed most of them. Still open: a hint that rescued a misclassified Thai r
 some bakeries and print shops "restaurants", and in one run the simulated customer stated a fact it was
 told it didn't know (the scorer counts it against the agent anyway).
 
+The carrier pipeline had its own story:
+
+| Quotes run | Mapping | Values correct at carriers | Invented at carriers | Decisions match |
+|---|---|---|---|---|
+| 1 | one LLM call per portal | 99.1% | 11 | 88% |
+| 2 | 3 samples, keep what most agree on | 100% | 0 | 100% |
+| 3 | same as run 2, run again | 100% | 0 | 100% |
+
+Building it, the evals and real runs caught the model mapping Lakeside's "Annual revenue ($)" in
+thousands (so Lakeside saw $1,800 instead of $1.8M), writing dropdown maps backwards, and, in quotes
+run 1, shifting Lakeside's map by one so roofers were submitted as restaurants. Each became a rule in
+code (units from the form's words, safe flipping) or consensus mapping, and runs 2 and 3 came back clean.
+
 ## Run it locally
 
 Needs Python 3.12+ and an OpenAI API key.
@@ -106,7 +162,8 @@ python3 -m venv .venv
 cp .env.example .env                        # then add OPENAI_API_KEY
 .venv/bin/pytest -q                         # all tests, no API key needed: the LLM is faked
 .venv/bin/uvicorn app.main:app --reload     # http://localhost:8000
-.venv/bin/python -m evals.run --limit 5     # a quick 5-persona eval, about $0.02
+.venv/bin/python -m evals.run --limit 5     # a quick 5-persona chat eval, about $0.02
+.venv/bin/python -m evals.quotes            # send the latest finished applications to the 3 portals
 ```
 
 Deploying to a server (systemd, nginx, Let's Encrypt): see [deploy/README.md](deploy/README.md).
@@ -118,13 +175,15 @@ app/
   main.py            FastAPI routes: chat page, /api/chat, /how-it-works, /evals, /healthz
   llm.py             the only LLM client: cost per call, spend caps, call log
   config.py          models, prices, caps (from .env)
-  db.py              SQLite tables: LLM calls, chat sessions, eval runs
+  db.py              SQLite tables: LLM calls, chat sessions, eval runs, portal mappings and submissions
+  carriers.py        the 3 fictional carriers: their forms, appetite and pricing rules
   agent/
     intake.py        extraction, no-guess rules, state machine (collecting, confirming, done)
+    submit.py        the submission agent: read form, consensus mapping, fill, submit, read result
     questions.py     question order, INDUSTRY_QUESTIONS, next_question()
     schema.py        the ACORD 125-style Submission, validated by Pydantic
     rules.py         coverage suggestions and hard-to-place flags
-evals/               personas, simulated customer, scorer, runner, committed reports
+evals/               personas, simulated customer, scorer, runners (chat and quotes), reports
 deploy/              systemd unit, nginx site, deploy.sh
 tests/               pytest, LLM faked
 ```
@@ -139,12 +198,15 @@ tests/               pytest, LLM faked
   larger model would catch. The model is one line in `.env`.
 - Three industries have follow-up questions (roofing, daycare, restaurant); everything else gets the
   base questions only. The per-IP rate limit is kept in memory.
+- The carriers are fictional, and their portals are plain HTML forms. Real carrier portals sit behind
+  broker logins and often need a browser (JavaScript, multi-page flows); the same read-map-fill design
+  would drive a headless browser instead of HTTP.
 - It's a portfolio demo, not an insurance product: it doesn't quote, bind or give advice.
 
 ## What's next
 
-- **A carrier-portal submission agent** that takes this verified application as its input, the next
-  step in a broker's workflow.
+- Drive JavaScript-heavy portals with a headless browser, using the same consensus mapping.
+- Binding: let the customer pick a quote and generate the documents for the broker to sign off.
 - Fix the restaurant over-classification and rerun the evals.
 - More industries, and a few real (consented) conversations to check the simulated ones against.
 

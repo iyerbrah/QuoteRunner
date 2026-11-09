@@ -49,5 +49,10 @@ MAX_MESSAGES_PER_SESSION = int(os.getenv("MAX_MESSAGES_PER_SESSION", "40"))  # c
 MAX_MESSAGE_CHARS = 1000
 RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "20"))         # per IP
 
+# --- Carrier portals -----------------------------------------------------------
+# Where the submission agent finds the (fictional) carrier portals. They live in
+# this same app, so by default it calls itself over HTTP like any other website.
+PORTAL_BASE_URL = os.getenv("PORTAL_BASE_URL", "http://127.0.0.1:8000")
+
 # --- Storage ------------------------------------------------------------------
 DB_PATH = Path(os.getenv("DB_PATH", ROOT / "data" / "quoterunner.db"))

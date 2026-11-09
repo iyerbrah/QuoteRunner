@@ -37,6 +37,17 @@ def latest_full_run(reports: list[dict]) -> Optional[dict]:
     return full[-1] if full else None
 
 
+def latest_quotes_report() -> Optional[dict]:
+    """The newest carrier-submission eval (evals/reports/quotes-N.json), without its rows."""
+    paths = [p for p in REPORTS_DIR.glob("quotes-*.json") if re.fullmatch(r"quotes-\d+\.json", p.name)]
+    if not paths:
+        return None
+    newest = max(paths, key=lambda p: int(p.stem.split("-")[1]))
+    report = json.loads(newest.read_text())
+    report.pop("rows", None)
+    return report
+
+
 def find_conversation(report: dict, persona_id: int) -> Optional[dict]:
     return next((c for c in report["conversations"] if c["persona"]["id"] == persona_id), None)
 

@@ -34,8 +34,8 @@ from app.agent.schema import BASE_FIELD_GROUP, GROUPS, US_STATES, Submission, va
 
 GREETING = ("Hi! I'll help you put together a business insurance application. "
             "Tell me about your business in a sentence or two: what you do, where, and how big.")
-DONE_MESSAGE = ("Thanks, your application is complete. A licensed broker will review it "
-                "and follow up with quotes.")
+DONE_MESSAGE = ("Thanks, your application is complete. Press “Get quotes from 3 carriers” and "
+                "I'll send it to each carrier's portal.")
 # How many recent chat messages each LLM call sees. Extraction sees only the
 # last question and the customer's answer: with more, the model re-extracts
 # the whole conversation and can resurrect or overwrite old answers.
@@ -56,6 +56,7 @@ class IntakeState(BaseModel):
     last_asked: Optional[str] = None  # a field name, "pending" or "summary"
     questions_asked: int = 0
     messages: list[dict] = []         # [{"role": "user" | "assistant", "content": ...}]
+    quotes: list[dict] = []           # carrier results, once the customer asks for quotes
 
 
 def new_state() -> IntakeState:
@@ -221,7 +222,10 @@ def apply_extraction(state: IntakeState, ext: Extraction) -> list[str]:
         try:
             value = validate_field(field, value, state.answers)
         except ValueError:
-            rejected.append(field)
+            # Tell the customer only about answers to what we asked; a bad value the
+            # model read into some other part of the message is just dropped.
+            if field in just_asked(state) or state.last_asked in (None, "summary"):
+                rejected.append(field)
             continue
         if field in TEXT_FIELDS and not grounded(value, latest_message):
             continue  # text the customer didn't type (e.g. copied from our summary)

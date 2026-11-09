@@ -40,3 +40,36 @@ def test_headline_ranges_match_the_two_latest_full_runs():
 def test_readme_links_point_at_real_files():
     for path in ["docs/screenshot.png", "deploy/README.md", "reference/starter"]:
         assert (ROOT / path).exists(), path
+
+
+def quotes(run_id):
+    return json.loads((ROOT / "evals" / "reports" / f"quotes-{run_id}.json").read_text())["summary"]
+
+
+def quotes_table_rows() -> list[str]:
+    """The rows of the README table whose header starts with '| Quotes run |'."""
+    lines = README.splitlines()
+    start = next(i for i, line in enumerate(lines) if line.startswith("| Quotes run |"))
+    rows = []
+    for line in lines[start + 2:]:          # skip the header and the |---| line
+        if not line.startswith("|"):
+            break
+        rows.append(line)
+    return rows
+
+
+@pytest.mark.parametrize("run_id", [1, 2, 3])
+def test_quotes_history_matches_its_reports(run_id):
+    s = quotes(run_id)
+    row = next(line for line in quotes_table_rows() if line.startswith(f"| {run_id} |"))
+    assert f"{s['values_correct'] * 100:.1f}%".replace("100.0%", "100%") in row
+    assert f"| {s['invented_at_carrier']} |" in row
+    assert f"{s['decisions_match'] * 100:.0f}%" in row
+
+
+def test_quotes_headline_matches_the_latest_runs():
+    a, b = quotes(2), quotes(3)
+    assert a["values_correct"] == b["values_correct"] == 1.0
+    assert f"**{a['invented_at_carrier']}** across {a['submissions']} portal submissions" in README
+    assert f"of {a['values_checked']:,}" in README
+    assert f"**{a['businesses_with_a_quote']} of {a['businesses']}**" in README

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% block title %}QuoteRunner: a verified insurance application from one sentence{% endblock %}
+{% block title %}QuoteRunner: from one sentence to insurance quotes{% endblock %}
 {% block body_class %}home{% endblock %}
 
 {% block hero %}
 <div class="hero" id="hero">
   <div class="hero-copy">
     <h1>What does your business do?</h1>
-    <p class="lede">Describe it in a sentence. QuoteRunner asks only for what's missing and fills in a
-      commercial insurance application, without guessing anything you didn't say.</p>
+    <p class="lede">Describe it in a sentence. QuoteRunner asks only for what's missing, fills in a
+      commercial insurance application without guessing anything you didn't say, and gets you quotes
+      from three carriers.</p>
     <form id="start" class="start">
       <label class="sr-only" for="start-input">Describe your business</label>
       <input id="start-input" type="text" maxlength="{{ max_chars }}" autocomplete="off" required
@@ -49,7 +50,9 @@
       <p class="proof">Tested on <a href="/evals">{{ proof.conversations }} simulated customers</a>:
         {{ proof.field_accuracy | pct }} of fields right, {{ proof.invented_values }} invented
         {{ "value" if proof.invented_values == 1 else "values" }}, about {{ proof.avg_questions | round | int }}
-        questions instead of a {{ proof.form_fields }}-field form.</p>
+        questions instead of a {{ proof.form_fields }}-field form{% if quotes %}; then
+        {{ "{:,}".format(quotes.values_checked) }} values sent to 3 carrier portals with
+        {{ quotes.invented_at_carrier }} invented{% endif %}.</p>
     {% endif %}
   </div>
 </section>
@@ -77,6 +80,18 @@
       <div id="progress-bar"></div>
     </div>
     <p id="progress-text" class="progress-text">0% complete</p>
+
+    <section id="quotes-box" class="quotes-box" hidden aria-label="Carrier quotes">
+      <button id="get-quotes" type="button" class="button">Get quotes from 3 carriers</button>
+      <p class="quotes-note">The agent fills each carrier's own portal from your verified application.
+        The carriers are fictional demo portals.</p>
+      <div id="quotes" class="quotes" aria-live="polite"></div>
+      <form id="followup" class="followup" hidden>
+        <p>To quote, the carriers need:</p>
+        <div id="followup-fields"></div>
+        <button type="submit" class="button">Send and get quotes again</button>
+      </form>
+    </section>
 
     <dl id="fields" class="fields"></dl>
 

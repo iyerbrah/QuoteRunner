@@ -58,6 +58,9 @@ class Persona(BaseModel):
     truth: dict[str, Any]              # field -> true value (only facts the owner knows)
     unknown: list[str]                 # fields the owner doesn't know
     change: Optional[dict] = None      # {"field": ..., "first": wrong value said first}
+    # The real value of each unknown fact, as the owner would find it by checking their
+    # books. Never shown to the simulated customer; only the quotes eval's follow-up uses it.
+    unknown_truth: dict[str, Any] = {}
 
     def expected_fields(self) -> list[str]:
         """Every field that applies to this business, known or not."""
@@ -129,15 +132,15 @@ def make_persona(persona_id: int) -> Persona:
     could_not_know = [f for f in ["annual_revenue_usd", "prior_claims_3yr", "subcontracted_pct",
                                   "alcohol_sales_pct"] if f in truth]
     unknown = rng.sample(could_not_know, k=rng.choice([1, 2]))
-    for field in unknown:
-        del truth[field]
+    unknown_truth = {field: truth.pop(field) for field in unknown}
 
     change = None
     if style == "changes_answer":
         field = rng.choice(["num_employees", "num_vehicles", "years_in_business"])
         change = {"field": field, "first": truth[field] + rng.choice([2, 3, 5])}
 
-    return Persona(id=persona_id, category=category, style=style, truth=truth, unknown=unknown, change=change)
+    return Persona(id=persona_id, category=category, style=style, truth=truth, unknown=unknown, change=change,
+                   unknown_truth=unknown_truth)
 
 
 def build_personas(count: int = COUNT) -> list[Persona]:

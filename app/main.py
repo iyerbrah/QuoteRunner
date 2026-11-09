@@ -5,13 +5,17 @@ The web app: one page and a small JSON API around the intake agent.
   GET  /healthz                              liveness check for systemd/uptime monitors
   POST /api/chat                             a customer message in; reply + form state out
   GET  /api/sessions/{id}/application.json   the finished application (once done)
+  POST /api/sessions/{id}/quotes             submit it to the carriers, get quotes back
   GET  /how-it-works                         how the agent works, with the latest eval numbers
   GET  /evals                                eval results (latest full run, or ?run=N)
   GET  /evals/runs/{run}/{persona}           one simulated conversation, scored
+  GET  /portals/{carrier}                    a FICTIONAL carrier's quote form (see app/carriers.py)
+  POST /portals/{carrier}                    the carrier validates, decides and answers
 
 Run locally:  .venv/bin/uvicorn app.main:app --reload
 """
 
+import json
 import logging
 import time
 import uuid
@@ -28,11 +32,13 @@ from sqlalchemy import text
 from sqlmodel import Session
 
 from app import config, eval_reports
-from app.agent.intake import (GREETING, IntakeState, build_submission, format_value,
-                              handle_message, label, new_state)
+from app.carriers import CARRIERS, validate_form
+from app.agent.intake import (GREETING, IntakeState, belongs_to_business, build_submission,
+                              format_value, handle_message, label, new_state, validate_field)
 from app.agent.questions import PRIORITY, applicable_industry_questions
+from app.agent import submit
 from app.agent.rules import recommend_coverage, risk_flags
-from app.db import ChatSession, get_engine, utc_now
+from app.db import ChatSession, PortalSubmission, get_engine, utc_now
 from app.llm import BudgetExceeded
 
 log = logging.getLogger("quoterunner")
@@ -131,6 +137,7 @@ def latest_summary() -> tuple[Optional[dict], Optional[str]]:
 def index(request: Request):
     return templates.TemplateResponse(request, "index.html", {
         "greeting": GREETING, "examples": EXAMPLES, "proof": latest_summary()[0],
+        "quotes": (eval_reports.latest_quotes_report() or {}).get("summary"),
         "max_chars": config.MAX_MESSAGE_CHARS, "initial_form": form_view(new_state()),
     })
 
@@ -140,6 +147,7 @@ def how_it_works(request: Request):
     summary, created_at = latest_summary()
     return templates.TemplateResponse(request, "how_it_works.html", {
         "active": "how", "summary": summary, "created_at": created_at,
+        "quotes": (eval_reports.latest_quotes_report() or {}).get("summary"),
     })
 
 
@@ -200,6 +208,55 @@ def download_application(session_id: str):
                     headers={"Content-Disposition": 'attachment; filename="application.json"'})
 
 
+class QuotesRequest(BaseModel):
+    # Facts a carrier asked for that the customer has now looked up, e.g.
+    # {"annual_revenue_usd": "900000"}. Checked by the same validation as the chat.
+    answers: dict[str, str] = {}
+
+
+def clean_number(text: str) -> str:
+    return text.replace(",", "").replace("$", "").strip()
+
+
+@app.post("/api/sessions/{session_id}/quotes")
+def get_quotes(session_id: str, request: Request, body: Optional[QuotesRequest] = None):
+    """The submission agent: take the finished application to every carrier portal."""
+    if rate_limited(request.client.host if request.client else "unknown"):
+        return error(429, "You're sending requests too quickly. Please wait a minute and try again.")
+    with Session(get_engine()) as db:
+        row = db.get(ChatSession, session_id)
+        if row is None:
+            return error(404, "This conversation has expired. Please start over.")
+        state = IntakeState.model_validate_json(row.state_json)
+        if state.status != "done":
+            return error(409, "Finish and approve the application first.")
+        for field, text in (body.answers if body else {}).items():
+            if not belongs_to_business(field, state.answers):
+                return error(422, "That isn't a question on this application.")
+            try:
+                try:
+                    state.answers[field] = validate_field(field, text, state.answers)
+                except ValueError:  # "900,000" or "$900000" for a number
+                    state.answers[field] = validate_field(field, clean_number(text), state.answers)
+            except ValueError:
+                return error(422, f"That doesn't look like a valid {label(field).lower()}. Try again.")
+            state.unknown = [f for f in state.unknown if f != field]
+        try:
+            results = submit.get_quotes(state, session_id=session_id)
+        except BudgetExceeded as e:
+            log.warning("Budget exceeded for quotes in session %s: %s", session_id, e)
+            return error(503, "This demo has reached its spending limit for now. Please try again later.")
+        except Exception:
+            log.exception("Quotes failed for session %s", session_id)
+            return error(502, "Couldn't reach the carriers just now. Please try again.")
+        state.quotes = [r.model_dump() for r in results]
+        row.state_json = state.model_dump_json()
+        row.updated_at = utc_now()
+        db.add(row)
+        db.commit()
+    return {"quotes": state.quotes, "form": form_view(state)}  # the form may have new answers
+
+
 # ---------------------------------------------------------------------------
 # Public eval results (read-only, from the committed report files)
 # ---------------------------------------------------------------------------
@@ -222,6 +279,7 @@ def evals_page(request: Request, run: Optional[int] = None):
                            key=lambda row: (row["accuracy"], row["field"]))  # weakest fields first
     return templates.TemplateResponse(request, "evals.html", {
         "active": "evals", "report": report, "is_latest": run is None, "history": reports,
+        "quotes": eval_reports.latest_quotes_report(),
         "full_run": eval_reports.FULL_RUN,
         "samples": eval_reports.samples(report) if report else [], "per_field": per_field,
     })
@@ -252,3 +310,36 @@ def transcript_page(request: Request, run_id: int, persona_id: int):
     return templates.TemplateResponse(request, "transcript.html", {
         "active": "evals", "report": report, "convo": convo, "rows": result_rows(convo),
     })
+
+
+# ---------------------------------------------------------------------------
+# Fictional carrier portals: the carriers' side of the integration
+# ---------------------------------------------------------------------------
+@app.get("/portals/{slug}", response_class=HTMLResponse)
+def portal_form(request: Request, slug: str):
+    carrier = CARRIERS.get(slug)
+    if carrier is None:
+        return not_found(request, "There is no such carrier portal.")
+    return templates.TemplateResponse(request, "portal.html", {"carrier": carrier, "result": None})
+
+
+@app.post("/portals/{slug}", response_class=HTMLResponse)
+async def portal_submit(request: Request, slug: str):
+    carrier = CARRIERS.get(slug)
+    if carrier is None:
+        return not_found(request, "There is no such carrier portal.")
+    form = {k: str(v) for k, v in (await request.form()).items()}
+    data, errors = validate_form(carrier, form)
+    reference = f"{carrier.prefix}-{uuid.uuid4().hex[:6].upper()}"
+    if errors:
+        result = {"status": "invalid", "errors": errors, "premium": None, "reason": "; ".join(errors)}
+    else:
+        decision = carrier.decide(data)
+        result = {"status": decision.status, "premium": decision.premium, "reason": decision.reason, "errors": []}
+    result["reference"] = reference
+    with Session(get_engine()) as db:
+        db.add(PortalSubmission(carrier=slug, reference=reference, received_json=json.dumps(form),
+                                status=result["status"], premium=result["premium"], reason=result["reason"]))
+        db.commit()
+    return templates.TemplateResponse(request, "portal.html", {"carrier": carrier, "result": result},
+                                      status_code=422 if errors else 200)

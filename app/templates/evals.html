@@ -38,6 +38,30 @@
       <span>agent cost per conversation (+${{ "%.4f" | format(s.avg_cost_sim_usd) }} for the simulated customer)</span></div>
   </section>
 
+  {% if quotes %}
+  {% set q = quotes.summary %}
+  <section>
+    <h2>From application to quotes</h2>
+    <p class="section-lede">The finished applications above were then sent by the submission agent to
+      3 fictional carrier portals, each with its own form and units. Every value each portal received
+      was checked against the owner's true facts. When a carrier needed something the owner didn't
+      know, the owner looked it up and the agent resubmitted once. Quotes run {{ quotes.run_id }},
+      {{ quotes.created_at[:10] }}.</p>
+    <div class="cards">
+      <div class="card"><span class="big">{{ q.values_correct | pct(1) }}</span>
+        <span>of {{ "{:,}".format(q.values_checked) }} values received by carriers were right</span></div>
+      <div class="card {% if q.invented_at_carrier %}warn{% endif %}"><span class="big">{{ q.invented_at_carrier }}</span>
+        <span>invented values reached a carrier, across {{ q.submissions }} submissions</span></div>
+      <div class="card"><span class="big">{{ q.decisions_match | pct }}</span>
+        <span>of carrier decisions matched their rules applied to the true facts</span></div>
+      <div class="card"><span class="big">{{ q.businesses_with_a_quote }}/{{ q.businesses }}</span>
+        <span>businesses quoted ({{ q.businesses_with_a_quote_first }} before the one follow-up)</span></div>
+      <div class="card"><span class="big">{{ "%.0f" | format(q.seconds_per_business * 1000) }} ms</span>
+        <span>per business once each portal is mapped (learned once for ${{ "%.4f" | format(q.mapping_cost_usd) }})</span></div>
+    </div>
+  </section>
+  {% endif %}
+
   <section>
     <h2>What the numbers mean</h2>
     <ul class="defs">

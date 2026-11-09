@@ -344,6 +344,32 @@ tbody tr:last-child td { border-bottom: 0; }
 .footer-links { display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.95rem; }
 .disclaimer { margin-top: 18px; color: var(--muted); font-size: 0.88rem; max-width: 62em; }
 
+/* --- Carrier quotes ------------------------------------------------------------ */
+.quotes-box { margin: 14px 0 6px; padding: 14px; border-radius: 12px; background: #fdf6dc; }
+.quotes-box .button { width: 100%; text-align: center; box-shadow: 4px 4px 0 var(--canary); }
+.quotes-note { font-size: 0.8rem; color: var(--muted); margin-top: 10px; }
+.quotes { display: grid; gap: 10px; margin-top: 12px; }
+.quotes:empty { display: none; }
+.quote { background: var(--card); border: 1.5px solid var(--ink); border-radius: 12px; padding: 12px 14px; }
+.quote-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.quote h4 { margin: 0; font-size: 0.95rem; }
+.quote-status { font-size: 0.75rem; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+                background: var(--paper); color: var(--muted); white-space: nowrap; }
+.quote[data-status="quoted"] .quote-status { background: #e3f1e9; color: var(--green); }
+.quote[data-status="declined"] .quote-status { background: var(--error-bg); color: var(--error); }
+.quote[data-status="needs_info"] .quote-status { background: #fdf3d4; color: var(--amber); }
+.quote-price { font: 800 1.9rem/1.1 var(--display); margin: 6px 0 2px; }
+.quote-detail { font-size: 0.85rem; color: var(--muted); margin: 4px 0; }
+.quote a { font-size: 0.82rem; font-weight: 600; }
+.quote[data-status="quoted"]:first-child { border-color: var(--green); box-shadow: 4px 4px 0 #cfe6d8; }
+.followup { margin-top: 12px; padding: 12px 14px; background: var(--card); border: 1.5px dashed var(--amber);
+            border-radius: 12px; font-size: 0.9rem; }
+.followup p { font-weight: 600; margin-bottom: 6px; }
+.followup-field { display: block; margin-bottom: 10px; color: var(--muted); }
+.followup-field input { display: block; width: 100%; margin-top: 3px; padding: 8px 10px; border: 1px solid var(--line);
+                        border-radius: 8px; font: 1rem var(--text); color: var(--ink); }
+.followup .button { width: 100%; text-align: center; }
+
 /* --- Smaller screens ------------------------------------------------------------- */
 @media (max-width: 900px) {
   /* The form stack moves below the input, inside the band. */

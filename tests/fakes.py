@@ -4,19 +4,27 @@ import json
 from types import SimpleNamespace
 
 from app import llm
+from evals.reference_mappings import as_tool_answer
 
 
 class FakeLLM:
     """Extraction calls (the ones with tools) return the next scripted dict;
     reply calls return a fixed question text."""
 
-    def __init__(self, *extractions, reply="(next question)"):
+    def __init__(self, *extractions, reply="(next question)", mapper=None):
         self.extractions = list(extractions)
         self.reply = reply
         self.calls = []
+        # Answers the submission agent's map_fields tool. Default: the reference mapping.
+        self.mapper = mapper or (lambda portal_fields: as_tool_answer(portal_fields))
 
     def __call__(self, messages, tools=None, tool_choice=None, model_role="agent", session_id=None):
         self.calls.append({"messages": messages, "tools": tools, "session_id": session_id})
+        if tools and tools[0]["function"]["name"] == "map_fields":
+            portal_fields = tools[0]["function"]["parameters"]["properties"]["fields"]["items"][
+                "properties"]["portal_field"]["enum"]
+            return SimpleNamespace(content=None, tool_calls=[SimpleNamespace(function=SimpleNamespace(
+                name="map_fields", arguments=json.dumps(self.mapper(portal_fields))))])
         if tools:
             args = self.extractions.pop(0)
             arguments = args if isinstance(args, str) else json.dumps(args)

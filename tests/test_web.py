@@ -168,3 +168,60 @@ def test_download_finished_application(monkeypatch):
 
 def test_download_unknown_session():
     assert client.get("/api/sessions/nope/application.json").status_code == 404
+
+
+# --- Carrier quotes --------------------------------------------------------------
+@pytest.fixture
+def portals_in_process(monkeypatch):
+    from app.agent import submit
+    monkeypatch.setattr(submit, "portal_client", lambda: TestClient(main.app))
+
+
+def test_quotes_need_a_finished_application(monkeypatch, portals_in_process):
+    run(monkeypatch, ext({**ROOFER, **ROOF_DETAILS}))
+    session_id = say(ROOFER_MESSAGE).json()["session_id"]        # confirming, not done
+    res = client.post(f"/api/sessions/{session_id}/quotes")
+    assert res.status_code == 409 and "approve" in res.json()["error"]
+
+
+def test_quotes_for_a_finished_application(monkeypatch, portals_in_process):
+    session_id, _ = finish_roofer(monkeypatch)
+
+    res = client.post(f"/api/sessions/{session_id}/quotes")
+
+    assert res.status_code == 200
+    quotes = res.json()["quotes"]
+    assert {q["carrier"] for q in quotes} == {"granite", "harborline", "lakeside"}
+    assert any(q["status"] == "quoted" and q["premium"] for q in quotes)
+    assert saved_state(session_id).quotes == quotes
+
+
+def test_quotes_for_an_unknown_session():
+    assert client.post("/api/sessions/nope/quotes").status_code == 404
+
+
+def test_follow_up_answers_are_validated_saved_and_requoted(monkeypatch, portals_in_process):
+    no_revenue = {k: v for k, v in {**ROOFER, **ROOF_DETAILS}.items() if k != "annual_revenue_usd"}
+    run(monkeypatch, ext(no_revenue), ext(unknown=["annual_revenue_usd"]), ext(approve=True))
+    session_id = say(ROOFER_MESSAGE).json()["session_id"]   # next question: revenue
+    say("no idea", session_id)                               # now the summary
+    say("yes, all correct", session_id)                      # done
+
+    first = client.post(f"/api/sessions/{session_id}/quotes").json()["quotes"]
+    assert any("annual_revenue_usd" in q["missing_fields"] for q in first)
+
+    bad = client.post(f"/api/sessions/{session_id}/quotes", json={"answers": {"annual_revenue_usd": "lots"}})
+    assert bad.status_code == 422
+
+    res = client.post(f"/api/sessions/{session_id}/quotes", json={"answers": {"annual_revenue_usd": "$900,000"}})
+    assert res.status_code == 200
+    assert any(q["status"] == "quoted" for q in res.json()["quotes"])
+    assert saved_state(session_id).answers["annual_revenue_usd"] == 900_000
+    revenue = next(f for f in res.json()["form"]["fields"] if f["field"] == "annual_revenue_usd")
+    assert revenue["status"] == "filled"
+
+
+def test_follow_up_rejects_fields_that_are_not_on_the_application(monkeypatch, portals_in_process):
+    session_id, _ = finish_roofer(monkeypatch)
+    res = client.post(f"/api/sessions/{session_id}/quotes", json={"answers": {"serves_alcohol": "yes"}})
+    assert res.status_code == 422

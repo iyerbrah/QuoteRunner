@@ -70,6 +70,33 @@ class EvalConversation(SQLModel, table=True):
     transcript_json: str
 
 
+class PortalSubmission(SQLModel, table=True):
+    """What a carrier portal received, and what it answered (the carrier's side)."""
+
+    __tablename__ = "portal_submissions"
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    created_at: datetime = Field(default_factory=utc_now)
+    carrier: str
+    reference: str = Field(index=True)
+    received_json: str
+    status: str                    # quoted, declined or invalid
+    premium: Optional[int] = None
+    reason: str = ""
+
+
+class PortalMapping(SQLModel, table=True):
+    """The agent's cached map from one portal form to the application (the agent's side).
+    Keyed by a hash of the form, so a portal that changes its form is mapped again."""
+
+    __tablename__ = "portal_mappings"
+
+    form_hash: str = Field(primary_key=True)
+    carrier: str
+    created_at: datetime = Field(default_factory=utc_now)
+    mapping_json: str
+
+
 _engine = None
 _engine_lock = threading.Lock()
 
