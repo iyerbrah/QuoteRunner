@@ -82,12 +82,64 @@ Then open https://quoterunner.ramiyer.tech.
 
 ## Every redeploy
 
+Merging a pull request into `main` deploys automatically (see below). To
+deploy by hand instead, on the VPS:
+
 ```bash
 cd /opt/quoterunner && ./deploy/deploy.sh
 ```
 
 It pulls, installs requirements, restarts the service and checks `/healthz`,
 stopping at the first failure.
+
+## Automatic deploys
+
+`.github/workflows/deploy.yml` runs after CI passes on `main`: it connects to
+the VPS as `ram` with a dedicated SSH key and runs `deploy/deploy.sh`, then
+checks that the server reports the merged commit and that `/healthz` answers.
+The key is locked on the server to that one command, so a leaked key can only
+redeploy `main`. It can also be run by hand: Actions → Deploy → Run workflow.
+
+One-time setup (about 5 minutes):
+
+**1. On your Mac, make the deploy key** (no passphrase, since GitHub uses it unattended):
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/quoterunner_deploy -N "" -C "github-actions-deploy@quoterunner"
+```
+
+**2. Install its public half on the VPS, locked to the deploy command:**
+
+```bash
+echo "command=\"cd /opt/quoterunner && ./deploy/deploy.sh\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty $(cat ~/.ssh/quoterunner_deploy.pub)" | ssh ram@quoterunner.ramiyer.tech 'cat >> ~/.ssh/authorized_keys'
+```
+
+**3. On the VPS, let `ram` restart the service without a password** (only that
+command; the file is checked before it's installed, so a typo can't break sudo):
+
+```bash
+echo 'ram ALL=(root) NOPASSWD: /usr/bin/systemctl restart quoterunner' > /tmp/quoterunner-deploy && sudo visudo -cf /tmp/quoterunner-deploy && sudo install -m 440 -o root -g root /tmp/quoterunner-deploy /etc/sudoers.d/quoterunner-deploy
+```
+
+**4. On your Mac, test the key.** It should run the deploy and end with
+`Deployed` and a commit id, without asking for any password:
+
+```bash
+ssh -i ~/.ssh/quoterunner_deploy ram@quoterunner.ramiyer.tech
+```
+
+**5. On your Mac, store the key and the server's host key as GitHub secrets:**
+
+```bash
+gh secret set VPS_SSH_KEY --repo iyerbrah/QuoteRunner < ~/.ssh/quoterunner_deploy
+```
+
+```bash
+ssh-keyscan -t ed25519 quoterunner.ramiyer.tech | gh secret set VPS_KNOWN_HOSTS --repo iyerbrah/QuoteRunner
+```
+
+To revoke the key later, delete its line (ending `github-actions-deploy@quoterunner`)
+from `/home/ram/.ssh/authorized_keys` on the VPS.
 
 ## Day to day
 

@@ -1,0 +1,50 @@
+# Deploys to the VPS after CI passes on main (that is, after a PR is merged).
+# It can also be started by hand from the Actions tab ("Run workflow").
+#
+# The SSH key in VPS_SSH_KEY can only run one thing on the server: its line in
+# /home/ram/.ssh/authorized_keys forces `cd /opt/quoterunner && ./deploy/deploy.sh`,
+# whatever the client asks for. So a leaked key can redeploy main, nothing else.
+# Setup steps: deploy/README.md, "Automatic deploys".
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy          # one deploy at a time, in order
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    # After a merge: only when CI passed on that push. By hand: always.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://quoterunner.ramiyer.tech
+    steps:
+      - name: Load the deploy key and the server's host key
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Run deploy.sh on the server
+        run: |
+          ssh -i ~/.ssh/deploy_key -o BatchMode=yes ram@quoterunner.ramiyer.tech | tee deploy.log
+          expected="${{ github.event.workflow_run.head_sha || github.sha }}"
+          grep -q "Deployed ${expected:0:7}" deploy.log || {
+            echo "::error::The server did not report deploying ${expected:0:7}"; exit 1; }
+
+      - name: Check the live site
+        run: curl --fail --silent --show-error --retry 10 --retry-delay 3 https://quoterunner.ramiyer.tech/healthz

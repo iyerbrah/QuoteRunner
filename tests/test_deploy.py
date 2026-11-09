@@ -81,3 +81,35 @@ def test_database_defaults_to_the_data_folder_next_to_the_app():
     out = subprocess.run([sys.executable, "-c", "from app import config; print(config.DB_PATH)"],
                          cwd=ROOT, env=env, capture_output=True, text=True, check=True).stdout.strip()
     assert out == str(ROOT / "data" / "quoterunner.db")
+
+
+# --- Automatic deploys ---------------------------------------------------------
+DEPLOY_WORKFLOW = (ROOT / ".github" / "workflows" / "deploy.yml").read_text()
+
+
+def test_deploys_only_after_ci_passes_on_main():
+    assert "workflows: [CI]" in DEPLOY_WORKFLOW and "branches: [main]" in DEPLOY_WORKFLOW
+    assert "github.event.workflow_run.conclusion == 'success'" in DEPLOY_WORKFLOW
+    assert "github.event.workflow_run.event == 'push'" in DEPLOY_WORKFLOW   # not on pull requests
+
+
+def test_deploy_checks_the_host_key_and_the_deployed_commit():
+    assert "known_hosts" in DEPLOY_WORKFLOW and "StrictHostKeyChecking=no" not in DEPLOY_WORKFLOW
+    assert "ram@quoterunner.ramiyer.tech" in DEPLOY_WORKFLOW
+    assert 'grep -q "Deployed' in DEPLOY_WORKFLOW
+    assert "https://quoterunner.ramiyer.tech/healthz" in DEPLOY_WORKFLOW
+
+
+def test_one_deploy_at_a_time():
+    assert "group: deploy" in DEPLOY_WORKFLOW and "cancel-in-progress: false" in DEPLOY_WORKFLOW
+
+
+def test_setup_locks_the_key_to_the_deploy_command():
+    guide = (DEPLOY / "README.md").read_text()
+    assert 'command=\\"cd /opt/quoterunner && ./deploy/deploy.sh\\",no-port-forwarding' in guide
+    assert "NOPASSWD: /usr/bin/systemctl restart quoterunner" in guide
+    assert "visudo -cf" in guide
+
+
+def test_deploy_script_prints_the_commit_the_workflow_checks_for():
+    assert 'echo "==> Deployed $(git rev-parse --short HEAD)"' in (DEPLOY / "deploy.sh").read_text()
