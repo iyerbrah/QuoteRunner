@@ -61,7 +61,7 @@
       50
     ],
     "max_customer_messages": 25,
-    "git_commit": "cd5506f-dirty",
+    "git_commit": "2663b7c-dirty",
     "note": "after summary fixes (state names, hide industry other, classification hint)"
   },
   "summary": {

@@ -61,7 +61,7 @@
       50
     ],
     "max_customer_messages": 25,
-    "git_commit": "cd5506f-dirty",
+    "git_commit": "2663b7c-dirty",
     "note": "repeat of run 3, same code, to measure run-to-run variance"
   },
   "summary": {
