@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quoterunner"
+version = "1.0.0"
+description = "AI insurance-broker agent: one sentence of chat becomes a verified commercial insurance application, submitted to 3 carrier portals for quotes."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Ram Iyer" }]
+requires-python = ">=3.12"
+# Keep in step with requirements.txt (the server installs from that file);
+# tests/test_packaging.py fails if the two lists drift apart.
+dependencies = [
+    "openai>=2.0",
+    "pydantic>=2.6",
+    "sqlmodel>=0.0.22",
+    "python-dotenv>=1.0",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.20",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.urls]
+Homepage = "https://quoterunner.ramiyer.tech"
+Source = "https://github.com/iyerbrah/QuoteRunner"
+"Eval results" = "https://quoterunner.ramiyer.tech/evals"
+
+[tool.setuptools.packages.find]
+include = ["app*", "evals*"]
+
+[tool.setuptools.package-data]
+app = ["templates/*.html", "static/*"]
+evals = ["reports/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
