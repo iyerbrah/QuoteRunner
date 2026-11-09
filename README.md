@@ -32,7 +32,7 @@ most: every persona has 1–2 facts they genuinely don't know, and any guess sho
 One customer message, end to end:
 
 ```mermaid
-flowchart LR
+flowchart TD
     B["Browser<br/>chat + live application"] -->|POST /api/chat| X["LLM call 1: extract<br/>forced tool call"]
     X --> V["Code: Pydantic validation<br/>and the no-guess rules"]
     V --> N["Code: next_question()<br/>priority order, industry follow-ups"]
