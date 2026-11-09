@@ -115,3 +115,9 @@ stopping at the first failure.
   separately (the effective limit is about 2x) and a restart resets it.
 - **The /evals page** reads the committed `evals/reports/*.json`, so it shows the same runs as
   GitHub after each `git pull`. No need to run evals on the server.
+- **Carrier portals.** The three fictional carrier portals live in this same app (`/portals/...`),
+  and the submission agent reaches them over HTTP at `PORTAL_BASE_URL`, which defaults to
+  `http://127.0.0.1:8000`, the app's own address behind nginx. If you change the port in
+  `quoterunner.service`, set `PORTAL_BASE_URL` in `.env` to match. The first quote request after a
+  deploy learns each portal's field mapping (about 10 s, a few LLM calls); it's cached in SQLite
+  after that.

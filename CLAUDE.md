@@ -1,14 +1,16 @@
 # QuoteRunner
 
-One AI agent that turns a messy, one-line description of a small US business
-into a complete, verified commercial insurance application (ACORD 125-style).
+An AI agent that turns a messy, one-line description of a small US business
+into a complete, verified commercial insurance application (ACORD 125-style),
+and a submission agent that takes that application to three (fictional) carrier
+portals and brings back quotes.
 Built as my PS-II portfolio project for Soma, an AI-native insurance
 brokerage. I must be able to explain every line in an interview without AI
 help.
 
 ## Scope
-One agent only. Do not add features beyond the current step. Depth and
-reliability over breadth.
+One pipeline only: the intake agent, then the submission agent. Do not add
+features beyond the current step. Depth and reliability over breadth.
 
 ## Stack
 - Python 3.12, FastAPI, Jinja2 templates + a little vanilla JS (no frontend
@@ -26,6 +28,8 @@ reliability over breadth.
   empty or gets asked.
 - Validation happens in code (Pydantic), never trusted from the model.
 - Coverage suggestions and risk flags are plain Python rules, not LLM output.
+- For carrier portals the LLM only maps fields (names, never values); code fills
+  every value from the verified application.
 - Every module gets tests; LLM calls are mocked in unit tests.
 - Never commit secrets; read them from env.
 - After each change, explain what changed and why in plain language, as if to
@@ -33,6 +37,7 @@ reliability over breadth.
 
 ## Layout
 - app/ (FastAPI app: chat page, /api/chat, /evals)
-- app/agent/ (intake logic, question rules, coverage rules)
-- evals/ (personas, runner, reports)
+- app/agent/ (intake logic, question rules, coverage rules, submit.py: the submission agent)
+- app/carriers.py (the 3 fictional carriers: their portal forms, appetite and pricing rules)
+- evals/ (personas, chat runner, quotes runner, reference mappings, reports)
 - deploy/ (systemd unit, nginx site config, deploy.sh)

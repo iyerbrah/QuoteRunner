@@ -34,6 +34,8 @@ The finished applications were then sent to the three carrier portals
 | Businesses quoted | **45 of 45**, after one follow-up for facts the owner didn't know (3 before it) |
 | Speed and cost | portal mapping learned once for $0.004, then **6 ms** per business |
 
+![A finished application with three carrier quotes, cheapest first, and the same summary in the chat](docs/quotes.png)
+
 In insurance, a made-up answer can void a policy, so **invented values** is the number that matters
 most: every persona has 1–2 facts they genuinely don't know, and any guess shows up in the score.
 
@@ -161,7 +163,7 @@ python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 cp .env.example .env                        # then add OPENAI_API_KEY
 .venv/bin/pytest -q                         # all tests, no API key needed: the LLM is faked
-.venv/bin/uvicorn app.main:app --reload     # http://localhost:8000
+.venv/bin/uvicorn app.main:app --reload     # http://localhost:8000 (on another port, set PORTAL_BASE_URL)
 .venv/bin/python -m evals.run --limit 5     # a quick 5-persona chat eval, about $0.02
 .venv/bin/python -m evals.quotes            # send the latest finished applications to the 3 portals
 ```

@@ -38,7 +38,7 @@ def test_headline_ranges_match_the_two_latest_full_runs():
 
 
 def test_readme_links_point_at_real_files():
-    for path in ["docs/screenshot.png", "deploy/README.md", "reference/starter"]:
+    for path in ["docs/screenshot.png", "docs/evals.png", "docs/quotes.png", "deploy/README.md", "reference/starter"]:
         assert (ROOT / path).exists(), path
 
 
