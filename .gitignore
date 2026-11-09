@@ -22,3 +22,8 @@ data/
 
 # Starter download (its files are copied into reference/starter)
 *.zip
+
+# Python packaging output
+build/
+dist/
+*.egg-info/
