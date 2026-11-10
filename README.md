@@ -19,7 +19,7 @@ Describe a small business in plain language, like *"we're a roofing crew out of 
 - **A submission agent that reads carrier portals.** It reads each carrier's quote form like any website. The model only maps form fields to the application, kept only where most of 3 independent samples agree; code fills every value, with units taken from the form's own words. 1,285 values sent across 252 submissions: 100% correct, 0 invented.
 - **Measured with simulated customers.** 50 business owners with known true facts (typos, vague numbers, changed answers, facts they don't know) talk to the same code the site runs: 99.3–99.8% field accuracy, about 7 questions instead of a 25-field form.
 - **Every result is public.** [/evals](https://quoterunner.ramiyer.tech/evals) shows each conversation field by field, and every report is committed in [evals/reports/](evals/reports/).
-- **Shipped like a team.** Small PRs with CI on each one (192 tests and an offline eval check), a protected `main`, and its own Ubuntu server with HTTPS, per-call cost tracing and spend caps, at about $0.003 per conversation.
+- **Shipped like a team.** Small PRs with CI on each one (193 tests and an offline eval check), a protected `main`, and its own Ubuntu server with HTTPS, per-call cost tracing and spend caps, at about $0.003 per conversation.
 
 **Stack:** Python 3.12 · FastAPI · Jinja2 + vanilla JS · Pydantic v2 · OpenAI `gpt-5-nano` (forced tool calls) · SQLite (SQLModel) · httpx · pytest · GitHub Actions · nginx + systemd on an Ubuntu VPS
 
@@ -188,7 +188,7 @@ Its own tests break the agent on purpose (revenue not converted to thousands, a 
 | [`app/llm.py`](app/llm.py), [`app/config.py`](app/config.py) | The only LLM client: cost per call, spend caps, the call log; models, prices and limits |
 | [`app/main.py`](app/main.py), [`app/templates/`](app/templates/), [`app/static/`](app/static/) | Routes, pages and the chat UI |
 | [`evals/`](evals/) | Personas, the simulated customer, both evals, the reference mappings, the PR check and every saved report |
-| [`tests/`](tests/) | 192 tests with a fake model: agents, portals, evals, web, deploy files, README numbers |
+| [`tests/`](tests/) | 193 tests with a fake model: agents, portals, evals, web, deploy files, README numbers |
 | [`deploy/`](deploy/) | The systemd unit, nginx site, deploy script and server runbook |
 | [`.github/workflows/`](.github/workflows/) | CI and the eval check on every PR |
 

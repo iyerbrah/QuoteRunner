@@ -54,5 +54,10 @@ RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", "20"))         # 
 # this same app, so by default it calls itself over HTTP like any other website.
 PORTAL_BASE_URL = os.getenv("PORTAL_BASE_URL", "http://127.0.0.1:8000")
 
+# --- Link previews ------------------------------------------------------------
+# The site's public address. Open Graph tags need absolute URLs for the page and
+# its preview image, so shared links show a proper card.
+SITE_URL = os.getenv("SITE_URL", "https://quoterunner.ramiyer.tech").rstrip("/")
+
 # --- Storage ------------------------------------------------------------------
 DB_PATH = Path(os.getenv("DB_PATH", ROOT / "data" / "quoterunner.db"))
