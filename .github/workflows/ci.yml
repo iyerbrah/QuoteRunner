@@ -1,8 +1,5 @@
-# Runs on every pull request and every push to main.
-#   tests:      the full pytest suite (the LLM is faked, so no API key is needed)
-#   eval-check: replays the latest eval's applications through the 3 carrier portals
-#               and fails if any invented value would reach a carrier, any value or
-#               decision is wrong, or the results drift from the committed report.
+# Runs on every pull request and every push to main: the full pytest suite
+# (the LLM is faked, so no API key is needed). The eval check is eval.yml.
 name: CI
 
 on:
@@ -24,14 +21,3 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: pytest -q
-
-  eval-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-      - run: pip install -r requirements.txt
-      - run: python -m evals.check
