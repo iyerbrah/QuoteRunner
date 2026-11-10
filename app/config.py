@@ -18,13 +18,19 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 # --- Which model each role uses ----------------------------------------------
+# Each provider has its own model setting, so switching LLM_PROVIDER is the only
+# change needed. AGENT_MODEL / CUSTOMER_SIM_MODEL override it for one role.
+OPENAI_MODEL = os.getenv("OPENAI_MODEL") or "gpt-5.4-mini"
+OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL") or "nvidia/nemotron-3.5-super-vl:free"
+PROVIDER_MODEL = OPENROUTER_MODEL if LLM_PROVIDER == "openrouter" else OPENAI_MODEL
+
 # "agent" talks to real customers; "customer_sim" plays a customer in the evals.
 MODELS = {
-    "agent": os.getenv("AGENT_MODEL", "gpt-5-nano"),
-    "customer_sim": os.getenv("CUSTOMER_SIM_MODEL", "gpt-5-nano"),
+    "agent": os.getenv("AGENT_MODEL") or PROVIDER_MODEL,
+    "customer_sim": os.getenv("CUSTOMER_SIM_MODEL") or PROVIDER_MODEL,
 }
 
-# How hard reasoning models (like gpt-5-nano) "think" before answering:
+# How hard reasoning models (like gpt-5.4-mini) "think" before answering:
 # minimal, low, medium or high. Thinking is billed as output tokens and adds
 # latency, so we keep it low. Set REASONING_EFFORT= (empty) to not send it.
 REASONING_EFFORT = os.getenv("REASONING_EFFORT", "low") or None
@@ -33,11 +39,15 @@ REASONING_EFFORT = os.getenv("REASONING_EFFORT", "low") or None
 # Every model in MODELS must be listed here, or chat() refuses to call it
 # (without a price we can't enforce the spend caps).
 # gpt-5-nano is OpenAI's cheapest model with tool calling.
-# Source: OpenAI list price, checked 2026-11-09.
+# Source: OpenAI list price, checked 2026-11-09 (gpt-5.4-mini: 2026-10-25).
 # OpenRouter names the same model "openai/gpt-5-nano".
+# nvidia/nemotron-3.5-super-vl:free is OpenRouter's free tier (rate-limited, $0),
+# checked 2026-11-10. Free models may log prompts to improve the model.
 PRICES = {
     "gpt-5-nano": {"input": 0.05, "output": 0.40},
+    "gpt-5.4-mini": {"input": 0.75, "output": 4.50},
     "openai/gpt-5-nano": {"input": 0.05, "output": 0.40},
+    "nvidia/nemotron-3.5-super-vl:free": {"input": 0.0, "output": 0.0},
 }
 
 # --- Spend caps in USD --------------------------------------------------------
