@@ -50,6 +50,7 @@ app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
 templates = Jinja2Templates(directory=HERE / "templates")
 templates.env.filters["pct"] = lambda x, digits=0: f"{x * 100:.{digits}f}%"
 templates.env.globals["label"] = label
+templates.env.globals["site_url"] = config.SITE_URL
 templates.env.filters["label"] = label
 
 EXAMPLES = [

@@ -1,6 +1,7 @@
 """Tests for the web app, through FastAPI's test client. The LLM is faked."""
 
 import html
+import re
 
 import pytest
 from fastapi.testclient import TestClient
@@ -55,6 +56,20 @@ def test_static_files_are_served():
 
 
 # --- Chat -----------------------------------------------------------------------
+def test_pages_have_link_preview_tags():
+    pages = {"/": "QuoteRunner: from one sentence to insurance quotes",
+             "/how-it-works": "How it works · QuoteRunner", "/evals": "Eval results · QuoteRunner"}
+    for path, title in pages.items():
+        page = client.get(path).text
+        tags = dict(re.findall(r'<meta (?:property|name)="((?:og|twitter):[a-z:_]+)" content="([^"]*)"', page))
+        assert html.unescape(tags["og:title"]) == title
+        assert tags["og:url"] == f"https://quoterunner.ramiyer.tech{path}"
+        assert tags["og:image"] == "https://quoterunner.ramiyer.tech/static/og.png"
+        assert tags["og:description"] and tags["twitter:card"] == "summary_large_image"
+    image = client.get("/static/og.png")
+    assert image.status_code == 200 and image.headers["content-type"] == "image/png"
+
+
 def test_first_message_creates_a_session_and_returns_the_form(monkeypatch):
     fake = run(monkeypatch, ext({"description": "roofing crew", "industry_category": "roofing",
                                  "state": "TX", "num_employees": 8}))
