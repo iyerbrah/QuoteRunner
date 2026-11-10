@@ -1,6 +1,7 @@
 """The README quotes eval numbers; make sure they match the committed reports."""
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -38,7 +39,7 @@ def test_headline_ranges_match_the_two_latest_full_runs():
 
 
 def test_readme_links_point_at_real_files():
-    for path in ["docs/screenshot.png", "docs/evals.png", "docs/quotes.png", "deploy/README.md", "reference/starter"]:
+    for path in re.findall(r"\]\(((?:docs|app|evals|tests|deploy|\.github)[^)#]*|LICENSE|pyproject\.toml)\)", README):
         assert (ROOT / path).exists(), path
 
 
@@ -73,3 +74,11 @@ def test_quotes_headline_matches_the_latest_runs():
     assert f"**{a['invented_at_carrier']}** across {a['submissions']} portal submissions" in README
     assert f"of {a['values_checked']:,}" in README
     assert f"**{a['businesses_with_a_quote']} of {a['businesses']}**" in README
+
+
+def test_test_count_in_the_readme_is_current():
+    import subprocess, sys
+    out = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"], cwd=ROOT,
+                         capture_output=True, text=True).stdout
+    count = int(re.search(r"(\d+) tests? collected", out).group(1))
+    assert f"{count} tests" in README
